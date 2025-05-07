@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Správa parkoviště | ParkingReservation</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <script src="https://alcdn.msauth.net/browser/2.38.2/js/msal-browser.min.js"></script>
+    <script src="scripts/auth.js"></script>
+
+    <section id="spaces">
+        <h1>Přidat místa</h1>
+        <form id="add-spaces">
+            <label for="count">Počet míst</label>
+            <input type="number" id="count" name="count" value="1">
+            <input type="submit" id="add-spaces">
+        </form>
+        <div id="add-space-result">
+
+        </div>
+        <h1>Všechna místa</h1>
+        <table id="all-spaces">
+            <tr>
+                <th>Číslo místa</th>
+                <th>Vytvořeno</th>
+                <th>Detail</th>
+                <th>Blokovat</th>
+                <th>Odstranit</th>
+            </tr>
+        </table>
+        <div id="block-space-result">
+
+        </div>
+    </section>
+
+    <section id="reservation-requests">
+        <h1>Požadavky na rezervaci</h1>
+        <table id="requests">
+            <tr>
+                <th>Číslo rezervace</th>
+                <th>Od</th>
+                <th>Do</th>
+                <th>Číslo parkovacího místa</th>
+                <th>Datum podání žádosti</th>
+                <th>Uživatel</th>
+                <th>Potvrdit</th>
+                <th>Zrušit</th>
+            </tr>
+        </table>
+        <button id="confirm-all-button">Potvrdit vše</button>
+    </section>
+
+    <section id="blockings">
+        <h1>Blokace</h1>
+        <table id="my-blockings">
+            <tr>
+                <th>Číslo blokace</th>
+                <th>Od</th>
+                <th>Do</th>
+                <th>Číslo parkovacího místa</th>
+                <th>Datum vytvoření</th>
+                <th>Zrušit</th>
+            </tr>
+        </table>
+    </section>
+
+
+    <script src="scripts/jQuery.js"></script>
+    <script src="scripts/admin.js"></script>
+
+</body>
+</html>

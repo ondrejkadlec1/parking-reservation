@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Reservace | ParkingReservation</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <script src="https://alcdn.msauth.net/browser/2.38.2/js/msal-browser.min.js"></script>
+    <script src="scripts/auth.js"></script>
+
+    <section id="check-aviability">
+        <h1>Rezervovat místo</h1>
+        <form id="get-spaces">
+            <label for="begins-at">Začátek:</label>
+            <input type="datetime-local" id="begins-at" name="begins-at" value="0" step=1800>
+            <label for="ends-at">Konec:</label>
+            <input type="datetime-local" id="ends-at" name="ends-at" value="0" step=1800>
+            <input type="submit" value="Ověřit dostupnost">
+        </form>
+        <div id="avialible">
+
+        </div>
+    </section>
+
+    <section id="my-reservations">
+        <h1>Moje rezervace</h1>
+        <table id="my">
+            <tr>
+                <th>Číslo rezervace</th>
+                <th>Od</th>
+                <th>Do</th>
+                <th>Parkovacího místa</th>
+                <th>Datum podání žádosti</th>
+                <th>Stav</th>
+                <th>Zrušit</th>
+            </tr>
+        </table>
+    </section>
+    <div id="make-reservation-result">
+
+    </div>
+
+
+    <script src="scripts/jQuery.js"></script>
+    <script src="scripts/user.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,57 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\Ondra\\source\\repos\\ParkingReservation\\wwwroot\\demo\\admin.html",
+      "PackagePath": "staticwebassets\\demo\\admin.html"
+    },
+    {
+      "Id": "C:\\Users\\Ondra\\source\\repos\\ParkingReservation\\wwwroot\\demo\\index.html",
+      "PackagePath": "staticwebassets\\demo\\index.html"
+    },
+    {
+      "Id": "C:\\Users\\Ondra\\source\\repos\\ParkingReservation\\wwwroot\\demo\\scripts\\admin.js",
+      "PackagePath": "staticwebassets\\demo\\scripts\\admin.js"
+    },
+    {
+      "Id": "C:\\Users\\Ondra\\source\\repos\\ParkingReservation\\wwwroot\\demo\\scripts\\auth.js",
+      "PackagePath": "staticwebassets\\demo\\scripts\\auth.js"
+    },
+    {
+      "Id": "C:\\Users\\Ondra\\source\\repos\\ParkingReservation\\wwwroot\\demo\\scripts\\jQuery.js",
+      "PackagePath": "staticwebassets\\demo\\scripts\\jQuery.js"
+    },
+    {
+      "Id": "C:\\Users\\Ondra\\source\\repos\\ParkingReservation\\wwwroot\\demo\\scripts\\user.js",
+      "PackagePath": "staticwebassets\\demo\\scripts\\user.js"
+    },
+    {
+      "Id": "C:\\Users\\Ondra\\source\\repos\\ParkingReservation\\wwwroot\\demo\\styles\\style.css",
+      "PackagePath": "staticwebassets\\demo\\styles\\style.css"
+    },
+    {
+      "Id": "C:\\Users\\Ondra\\source\\repos\\ParkingReservation\\wwwroot\\favicon.ico",
+      "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.ParkingReservation.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.ParkingReservation.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.build.ParkingReservation.props",
+      "PackagePath": "build\\ParkingReservation.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.buildMultiTargeting.ParkingReservation.props",
+      "PackagePath": "buildMultiTargeting\\ParkingReservation.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.buildTransitive.ParkingReservation.props",
+      "PackagePath": "buildTransitive\\ParkingReservation.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
