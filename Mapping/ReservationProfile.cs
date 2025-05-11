@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using ParkingReservation.Dtos;
+using ParkingReservation.Dtos.Reservations;
 using ParkingReservation.Models;
 
 namespace ParkingReservation.Mapping
@@ -8,7 +8,8 @@ namespace ParkingReservation.Mapping
     {
         public ReservationProfile()
         {
-            CreateMap<Reservation, ReservationDto>();
+            CreateMap<Reservation, ReservationDto>()
+                .ForMember(dest => dest.State, opt => opt.MapFrom(src => src.State.Name));
             CreateMap<ReservationRequestDto, Reservation>();
         }
 

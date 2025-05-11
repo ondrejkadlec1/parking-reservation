@@ -10,7 +10,7 @@
     $("body").on("click", "#res-button", makeReservation);
 
     $("body").on("click", ".cancel-button", function () {
-        var id = $(this).parent().attr("id");
+        var id = $(this).parent().parent().attr("id");
         cancelReservation(id);
     });
 
@@ -19,7 +19,7 @@
 
 function getSpaces() {
     $.ajax({
-        url: `https://localhost:7036/api/ParkingSpaces/avialible?from=${$('#begins-at').val()}Z&till=${$('#ends-at').val()}Z`,
+        url: `https://localhost:7036/api/Spaces/avialible?from=${$('#begins-at').val()}Z&till=${$('#ends-at').val()}Z`,
         method: 'GET',
         dataType: 'json',
         success: function (response) {
@@ -29,8 +29,8 @@ function getSpaces() {
                 $('#avialible').append(`<button id="res-button">Rezervovat</span>`);
             }
         },
-        error: function (jqXHR, textStatus, errorThrown) {
-            console.error('Error:', textStatus, errorThrown);
+        error: function (jqXHR, textStatus) {
+            console.error(textStatus, jqXHR);
         }
     });
 }
@@ -67,8 +67,8 @@ function getMyReservations() {
             }
 
         },
-        error: function (jqXHR, textStatus, errorThrown) {
-            console.error('Error:', textStatus, errorThrown);
+        error: function (jqXHR, textStatus) {
+            console.error(textStatus, jqXHR);
         }
     });
 }
@@ -78,10 +78,10 @@ function cancelReservation(id) {
         type: "DELETE",
         url: `https://localhost:7036/api/Reservations/${id}`,
         success: function () {
-            $(`#${id}`).find(".state").text(3);
+            $(`#${id}`).find(".state").text('zrušeno');
         },
-        error: function (jqXHR, textStatus, errorThrown) {
-            console.error('Error:', textStatus, errorThrown);
+        error: function (jqXHR, textStatus) {
+            console.error(textStatus, jqXHR);
         }
     });
 }
@@ -93,7 +93,7 @@ function displayReservation(reservation) {
             <td>${reservation.endsAt}</td>
             <td>${reservation.spaceNumber}</td>
             <td>${reservation.issuedAt}</td>
-            <td class="state">${reservation.stateId}</td>
+            <td class="state">${reservation.state}</td>
             <td><button class="cancel-button">Zrušit</button></td>
         </tr>`);
 }

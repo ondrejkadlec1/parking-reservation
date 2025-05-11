@@ -1,53 +1,39 @@
-﻿using System.Runtime.InteropServices;
-using AutoMapper;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using ParkingReservation.Data;
-using ParkingReservation.Dtos;
-using ParkingReservation.Models;
+using ParkingReservation.Dtos.Blockings;
+using ParkingReservation.Services.Interfaces;
+using ParkingReservation.Services.Results;
 
 namespace ParkingReservation.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
-    public class BlockingsController(IMapper mapper, AppDbContext context) : ControllerBase
+    public class BlockingsController(IReservationWriteService service) : ControllerBase
     {
-        IMapper _mapper = mapper;
-        AppDbContext _context = context;
+        IReservationWriteService _service = service;
+
+        /// <summary>
+        /// Vytvoří novou blokaci, pokud už místo není zablokované a zruší konfliktní rezervace.
+        /// </summary>
+        /// <param name="dto">Reprezentace blokace.</param>
+        /// <returns>Reprezentace vytvořené blokace.</returns>
 
         [HttpPost]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         public async Task<ActionResult<BlockingDto>> Post(CreateBlockingDto dto)
         {
-            var blocking = _mapper.Map<Blocking>(dto);
-            _context.Add(blocking);
-            try
+            var call = await _service.CreateBlocking(dto, User);
+            if (!call.Success)
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                return NotFound($"Místo {dto.SpaceNumber} neexistuje.");
-            }
-            return Ok(_mapper.Map<BlockingDto>(blocking)); 
-        }
+                if (call.ErrorCode == Errors.NotFound)
+                {
+                    return NotFound($"Místo {dto.SpaceNumber} neexistuje.");
 
-        [HttpGet]
-        [ProducesResponseType(200)]
-        public async Task<ActionResult<ICollection<BlockingDto>>> Get()
-        {
-            var result = await _context.Blockings.Select(p => _mapper.Map<BlockingDto>(p)).ToListAsync();
-            return Ok(result);
-        }
-
-        [HttpDelete("{id}")]
-        [ProducesResponseType(204)]
-        public async Task<ActionResult> Delete(Guid id)
-        {
-            await _context.Blockings.Where(p => p.Id == id).ExecuteDeleteAsync();
-            return NoContent();
+                }
+            }
+            return Ok(call.Object); 
         }
     }
 }

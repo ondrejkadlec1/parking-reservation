@@ -1,13 +1,18 @@
 ﻿using System.Collections.ObjectModel;
+using System.Security.Claims;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ParkingReservation.Data;
-using ParkingReservation.Dtos;
+using ParkingReservation.Dtos.Spaces;
 using ParkingReservation.Models;
 
 namespace ParkingReservation.Controllers
 {
+    /// <summary>
+    /// Operace s parkovacími místy.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class SpacesController(AppDbContext context, IMapper mapper) : ControllerBase
@@ -15,37 +20,38 @@ namespace ParkingReservation.Controllers
         AppDbContext _context = context;
         IMapper _mapper = mapper;
 
+        /// <summary>
+        /// Vrátí všechna parkovací místa.
+        /// </summary>
+        /// <returns>Reprezentace všech parkovacích míst.</returns>
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         [ProducesResponseType(200)]
-        public async Task<ActionResult<ICollection<SpaceDto>>> GetAll()
+        public async Task<ActionResult<ICollection<SpaceDto>>> Get()
         {
             var result = await _context.Spaces.Select(p => _mapper.Map<SpaceDto>(p)).ToListAsync();
             return Ok(result);
         }
 
-        [HttpGet("{spaceNumber}")]
-        [ProducesResponseType(200)]
-        public async Task<ActionResult<SpaceDetailDto>> GetBySpaceNumber(int spaceNumber)
-        {
-            var result = _mapper.Map<SpaceDetailDto>(await _context.Spaces
-                .Where(p => p.SpaceNumber == spaceNumber)
-                .Include(p => p.Reservations)
-                .FirstOrDefaultAsync());
-            return Ok(result);
-        }
-
+        /// <summary>
+        /// Vrátí obsazenost parkoviště v daném čase.
+        /// </summary>
+        /// <param name="from">Začátek potenciální rezervace.</param>
+        /// <param name="till">Konec potenciální rezervace.</param>
+        /// <returns>Počet míst a obscazených míst.</returns>
         [HttpGet("avialible")]
         [ProducesResponseType(200)]
-        public async Task<ActionResult<OccupiedSpacesDto>> GetAvialible(DateTime from, DateTime till)
+        public async Task<ActionResult<Availability>> GetAvailability(DateTime from, DateTime till)
         {
             int total = await _context.Spaces.CountAsync();
             int occupied = await _context.Spaces
+                .Include(p => p.Reservations)
                 .Where(p => p.Reservations
-                    .Where(r => r.BeginsAt < from & r.EndsAt > till).Any()
+                    .Where(r => r.BeginsAt < till && r.EndsAt > from).Any()
                 ).CountAsync();
             bool is_avialible = total > occupied;
 
-            var result = new OccupiedSpacesDto
+            var result = new Availability
             {
                 OccupiedCount = occupied,
                 TotalCount = total,
@@ -54,14 +60,21 @@ namespace ParkingReservation.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Přidá daný počet parkovacích míst.
+        /// </summary>
+        /// <param name="dto">Informace o přidávaných místech.</param>
+        /// <returns>Reprezentace nově vytvořených míst.</returns>
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ProducesResponseType(200)]
         public async Task<ActionResult<IEnumerable<SpaceDto>>> Post([FromBody] CreateSpacesDto dto)
         {
             var result = new Collection<Space>();
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             for (var i = 0; i < dto.Count; i++)
             {
-                var space = new Space { CreatedBy = "someusersId" };
+                var space = new Space { CreatedBy =  userId };
                 result.Add(space);
                 _context.Add(space);
             }
@@ -71,6 +84,11 @@ namespace ParkingReservation.Controllers
             return Ok(output);
         }
 
+        /// <summary>
+        /// Smaže parkovací místo pokud existuje.
+        /// </summary>
+        /// <param name="spaceNumber">Číslo parkovacího místa ke smazání.</param>
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{spaceNumber}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]

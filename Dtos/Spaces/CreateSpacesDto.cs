@@ -1,8 +1,7 @@
-﻿namespace ParkingReservation.Dtos
+﻿namespace ParkingReservation.Dtos.Spaces
 {
     public record CreateSpacesDto
     {
         public int Count { get; set; }
-        public DateTime AvialibleFrom { get; set; }
     }
 }

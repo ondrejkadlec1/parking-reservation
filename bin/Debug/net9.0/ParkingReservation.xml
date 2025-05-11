@@ -4,5 +4,101 @@
         <name>ParkingReservation</name>
     </assembly>
     <members>
+        <member name="M:ParkingReservation.Controllers.BlockingsController.Post(ParkingReservation.Dtos.Blockings.CreateBlockingDto)">
+            <summary>
+            Vytvoří novou blokaci, pokud už místo není zablokované a zruší konfliktní rezervace.
+            </summary>
+            <param name="dto">Reprezentace blokace.</param>
+            <returns>Reprezentace vytvořené blokace.</returns>
+        </member>
+        <member name="T:ParkingReservation.Controllers.ReservationsController">
+            <summary>
+            Operace s rezervacemi.
+            </summary>
+        </member>
+        <member name="M:ParkingReservation.Controllers.ReservationsController.#ctor(ParkingReservation.Services.Interfaces.IReservationReadService,ParkingReservation.Services.Interfaces.IReservationWriteService)">
+            <summary>
+            Operace s rezervacemi.
+            </summary>
+        </member>
+        <member name="M:ParkingReservation.Controllers.ReservationsController.GetRequests">
+            <summary>
+            Vrátí všechny rezervace s nerozhodutým stavem.
+            </summary>
+            <returns>Reprezentace nerozhodnutých rezervací.</returns>
+        </member>
+        <member name="M:ParkingReservation.Controllers.ReservationsController.GetMy">
+            <summary>
+            Vrátí všechny rezervace přihlášeného uživatele.
+            </summary>
+            <returns>Reprezentace rezervací uživatele.</returns>
+        </member>
+        <member name="M:ParkingReservation.Controllers.ReservationsController.GetBySpace(System.Int32)">
+            <summary>
+            Vrátí všechny rezervace daného místa.
+            </summary>
+            <returns>Reprezentace rezervací místa.</returns>
+        </member>
+        <member name="M:ParkingReservation.Controllers.ReservationsController.PostRequest(ParkingReservation.Dtos.Reservations.ReservationRequestDto)">
+            <summary>
+            Požádá o rezervaci, pokud existuje volné místo.
+            </summary>
+            <param name="request">Reprezentace požadavku na rezervaci.</param>
+            <returns>Reprezentace vytvořenéhé rezervace.</returns>
+        </member>
+        <member name="M:ParkingReservation.Controllers.ReservationsController.Confirm(System.Guid)">
+            <summary>
+            Potvrdí rezervaci, pokud existuje.
+            </summary>
+            <param name="id">Číslo rezervace</param>
+        </member>
+        <member name="M:ParkingReservation.Controllers.ReservationsController.ConfirmAll">
+            <summary>
+            Potvrdí všechny nerozhodnuté rezervace.
+            </summary>
+        </member>
+        <member name="M:ParkingReservation.Controllers.ReservationsController.Cancel(System.Guid)">
+            <summary>
+            Zruší rezervaci.
+            </summary>
+            <param name="id">Číslo rezervace ke zrušení.</param>
+        </member>
+        <member name="T:ParkingReservation.Controllers.SpacesController">
+            <summary>
+            Operace s parkovacími místy.
+            </summary>
+        </member>
+        <member name="M:ParkingReservation.Controllers.SpacesController.#ctor(ParkingReservation.Data.AppDbContext,AutoMapper.IMapper)">
+            <summary>
+            Operace s parkovacími místy.
+            </summary>
+        </member>
+        <member name="M:ParkingReservation.Controllers.SpacesController.Get">
+            <summary>
+            Vrátí všechna parkovací místa.
+            </summary>
+            <returns>Reprezentace všech parkovacích míst.</returns>
+        </member>
+        <member name="M:ParkingReservation.Controllers.SpacesController.GetAvailability(System.DateTime,System.DateTime)">
+            <summary>
+            Vrátí obsazenost parkoviště v daném čase.
+            </summary>
+            <param name="from">Začátek potenciální rezervace.</param>
+            <param name="till">Konec potenciální rezervace.</param>
+            <returns>Počet míst a obscazených míst.</returns>
+        </member>
+        <member name="M:ParkingReservation.Controllers.SpacesController.Post(ParkingReservation.Dtos.Spaces.CreateSpacesDto)">
+            <summary>
+            Přidá daný počet parkovacích míst.
+            </summary>
+            <param name="dto">Informace o přidávaných místech.</param>
+            <returns>Reprezentace nově vytvořených míst.</returns>
+        </member>
+        <member name="M:ParkingReservation.Controllers.SpacesController.Delete(System.Int32)">
+            <summary>
+            Smaže parkovací místo pokud existuje.
+            </summary>
+            <param name="spaceNumber">Číslo parkovacího místa ke smazání.</param>
+        </member>
     </members>
 </doc>

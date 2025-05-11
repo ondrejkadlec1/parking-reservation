@@ -1,4 +1,4 @@
-﻿namespace ParkingReservation.Dtos
+﻿namespace ParkingReservation.Dtos.Spaces
 {
     public record SpaceDto
     {

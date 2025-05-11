@@ -1,8 +1,14 @@
 using System.Reflection;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Identity.Web;
 using Microsoft.OpenApi.Models;
 using ParkingReservation.Data;
+using ParkingReservation.Security.Handlers;
+using ParkingReservation.Security.Requirements;
+using ParkingReservation.Services;
+using ParkingReservation.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +29,7 @@ builder.Services.AddSwaggerGen(options =>
         Scheme = "Bearer",
         BearerFormat = "JWT",
         In = ParameterLocation.Header,
-        Description = "Enter your Bearer token here. Example: 'Bearer eyJ0eXAiOiJK...'"
+        Description = "Enter Bearer token."
     });
     options.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
@@ -47,6 +53,22 @@ builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddMicrosoftIdentityWebApi(builder.Configuration);
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("OwnerOrAdmin", policy =>
+        policy.Requirements.Add(new OwnerOrAdminRequirement()));
+    options.AddPolicy("Owner", policy =>
+        policy.Requirements.Add(new OwnershipRequirement()));
+});
+
+builder.Services.AddScoped<IAuthorizationHandler, OwnershipHandler>();
+builder.Services.AddScoped<IAuthorizationHandler, OwnerOrAdminHandler>();
+builder.Services.AddScoped<IClaimsTransformation, RoleClaimTransformer>();
+
+builder.Services.AddScoped<IReservationWriteService, ReservationsWriteService>();
+builder.Services.AddScoped<IReservationReadService, ReservationsReadService>();
 
 var app = builder.Build();
 

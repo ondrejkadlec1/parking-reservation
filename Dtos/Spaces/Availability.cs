@@ -1,6 +1,6 @@
-﻿namespace ParkingReservation.Dtos
+﻿namespace ParkingReservation.Dtos.Spaces
 {
-    public record OccupiedSpacesDto
+    public record Availability
     {
         public int OccupiedCount { get; set; }
         public int TotalCount { get; set; }

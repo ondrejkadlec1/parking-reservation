@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using ParkingReservation.Dtos;
+using ParkingReservation.Dtos.Spaces;
 using ParkingReservation.Models;
 
 namespace ParkingReservation.Mapping
@@ -9,7 +9,6 @@ namespace ParkingReservation.Mapping
         public SpaceProfile()
         {
             CreateMap<Space, SpaceDto>();
-            CreateMap<Space, SpaceDetailDto>();
         }
 
     }

@@ -1,4 +1,4 @@
-﻿namespace DocumentationApp.Services.Results
+﻿namespace ParkingReservation.Services.Results
 {
     public record ServiceCallResult<T>
     {
@@ -20,8 +20,7 @@
         Success,
         NotFound,
         Unauthorized,
-        InvaData,
-        NameAlreadyUsed,
-        Other
+        InvalidState,
+        Conflict
     }
 }

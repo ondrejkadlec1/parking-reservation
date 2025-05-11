@@ -21,7 +21,7 @@
         confirmReservation(id);
     });
 
-    $("body").on("click", ".confirm-all-button", function () {
+    $("body").on("click", "#confirm-all-button", function () {
         confirmAll();
     });
 
@@ -52,6 +52,7 @@
 });
 
 function AddSpaces() {
+    console.log("ů");
     $("#add-op-result").empty();
     $.ajax({
         type: "POST",
@@ -65,8 +66,8 @@ function AddSpaces() {
             displaySpace(data);
             $('#add-spaces-result').append(`<p>Přidána místa (${data.lenght}).</p>`);
         },
-        error: function (jqXHR, textStatus, errorThrown) {
-            console.error('Error:', textStatus, errorThrown);
+        error: function (jqXHR, textStatus) {
+            console.error(textStatus, jqXHR);
         }
     });
 }
@@ -80,8 +81,8 @@ function getSpaces() {
                 displaySpace(row);
             }
         },
-        error: function (jqXHR, textStatus, errorThrown) {
-            console.error('Error:', textStatus, errorThrown);
+        error: function (jqXHR, textStatus) {
+            console.error(textStatus, jqXHR);
         }
     });
 }
@@ -107,8 +108,8 @@ function getRequests() {
             }
 
         },
-        error: function (jqXHR, textStatus, errorThrown) {
-            console.error('Error:', textStatus, errorThrown);
+        error: function (jqXHR, textStatus) {
+            console.error(textStatus, jqXHR);
         }
     });
 }
@@ -124,8 +125,8 @@ function getBlockings() {
             }
 
         },
-        error: function (jqXHR, textStatus, errorThrown) {
-            console.error('Error:', textStatus, errorThrown);
+        error: function (jqXHR, textStatus) {
+            console.error(textStatus, jqXHR);
         }
     });
 }
@@ -133,7 +134,7 @@ function getBlockings() {
 function getSpaceDetail(id) {
     $('.calendar').remove();
     $.ajax({
-        url: `https://localhost:7036/api/Spaces/${id}`,
+        url: `https://localhost:7036/api/Reservations/${id}`,
         method: 'GET',
         dataType: 'json',
         success: function (response) {
@@ -151,9 +152,9 @@ function getSpaceDetail(id) {
                     <td>
                 </tr>`
             )
-            for (var row of response.reservations) {
+            for (var row of response) {
                 $('.calendar-table').append(`
-                <tr id=cal-${row.id}>
+                <tr id="cal-${row.id}">
                     <td>${row.id}</td>
                     <td>${row.beginsAt}</td>
                     <td>${row.endsAt}</td>
@@ -162,8 +163,8 @@ function getSpaceDetail(id) {
             }
 
         },
-        error: function (jqXHR, textStatus, errorThrown) {
-            console.error('Error:', textStatus, errorThrown);
+        error: function (jqXHR, textStatus) {
+            console.error(textStatus, jqXHR);
         }
     });
 }
@@ -173,7 +174,7 @@ function blockSpaceDialog(spaceNumber) {
     $(`#sp-${spaceNumber}`).after(
         `<tr class="blocking-dialog">
             <td>
-                <form class="block-form" data-id=${spaceNumber}>
+                <form class="block-form" data-space-number=${spaceNumber}>
                     <label for="begins-at">Začátek:</label>
                     <input type="datetime-local" id="begins-at" name="begins-at" value="0">
                     <label for="ends-at">Konec:</label>
@@ -193,8 +194,8 @@ function deleteSpace(id) {
         success: function () {
             $(`#sp-${id}`).remove();
         },
-        error: function (jqXHR, textStatus, errorThrown) {
-            console.error('Error:', textStatus, errorThrown);
+        error: function (jqXHR, textStatus) {
+            console.error(textStatus, jqXHR);
         }
     });
 }
@@ -208,8 +209,8 @@ function cancelReservation(id) {
             $(`#res-${id}`).remove();
             $(`#cal-${id}`).remove();
         },
-        error: function (jqXHR, textStatus, errorThrown) {
-            console.error('Error:', textStatus, errorThrown);
+        error: function (jqXHR, textStatus) {
+            console.error(textStatus, jqXHR);
         }
     });
 }
@@ -222,8 +223,8 @@ function confirmReservation(id) {
         success: function () {
             $(`#res-${id}`).remove();
         },
-        error: function (jqXHR, textStatus, errorThrown) {
-            console.error('Error:', textStatus, errorThrown);
+        error: function (jqXHR, textStatus) {
+            console.error(textStatus, jqXHR);
         }
     });
 }
@@ -231,13 +232,13 @@ function confirmReservation(id) {
 function confirmAll() {
     $.ajax({
         type: "PATCH",
-        url: `https://localhost:7036/api/Reservations/`,
+        url: `https://localhost:7036/api/Reservations/confirm-all`,
         dataType: "json",
         success: function () {
             $("#requests").find("td").remove();
         },
-        error: function (jqXHR, textStatus, errorThrown) {
-            console.error('Error:', textStatus, errorThrown);
+        error: function (jqXHR, textStatus) {
+            console.error(textStatus, jqXHR);
         }
     });
 }
@@ -250,8 +251,8 @@ function unblock(id) {
         success: function () {
             $(`#bl-${id}`).remove();
         },
-        error: function (jqXHR, textStatus, errorThrown) {
-            console.error('Error:', textStatus, errorThrown);
+        error: function (jqXHR, textStatus) {
+            console.error(textStatus, jqXHR);
         }
     });
 }
@@ -279,7 +280,7 @@ function blockSpace(spaceNumber) {
 }
 
 function displayBlocking(blocking) {
-    $('#my-blockings').append(`<tr id=bl-${blocking.id}>
+    $('#my-blockings').append(`<tr id="bl-${blocking.id}">
             <td>${blocking.id}</td>
             <td>${blocking.beginsAt}</td>
             <td>${blocking.endsAt}</td>
@@ -291,7 +292,7 @@ function displayBlocking(blocking) {
 }
 
 function displaySpace(space) {
-    $('#all-spaces').append(`<tr id=sp-${space.spaceNumber}>
+    $('#all-spaces').append(`<tr id="sp-${space.spaceNumber}">
             <td>${space.spaceNumber}</td>
             <td>${space.createdAt}</td>
             <td><button class="detail-button" data-space-number=${space.spaceNumber}>Detail</button></td>

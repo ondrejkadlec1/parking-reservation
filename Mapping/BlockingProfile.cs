@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using ParkingReservation.Dtos;
+using ParkingReservation.Dtos.Blockings;
 using ParkingReservation.Models;
 
 namespace ParkingReservation.Mapping

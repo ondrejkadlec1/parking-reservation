@@ -1,4 +1,4 @@
-﻿namespace ParkingReservation.Dtos
+﻿namespace ParkingReservation.Dtos.Reservations
 {
     public record ReservationDto
     {
@@ -7,7 +7,7 @@
         public DateTime EndsAt { get; set; }
         public DateTime IssuedAt { get; set; }
         public string UserId { get; set; } = null!;
-        //public string UserName { get; set; } = null!;
+        public string State { get; set; } = null!;
         public int SpaceNumber { get; set; }
     }
 }

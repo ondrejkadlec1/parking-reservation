@@ -1,123 +1,140 @@
-﻿using System.Runtime.InteropServices;
-using AutoMapper;
-using Microsoft.AspNetCore.Http;
+﻿using ParkingReservation.Services.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using ParkingReservation.Data;
-using ParkingReservation.Dtos;
-using ParkingReservation.Models;
+using ParkingReservation.Dtos.Reservations;
+using ParkingReservation.Services.Interfaces;
+using Microsoft.Graph.Models;
 
 namespace ParkingReservation.Controllers
 {
+    /// <summary>
+    /// Operace s rezervacemi.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class ReservationsController(IMapper mapper, AppDbContext context) : ControllerBase
+    public class ReservationsController(IReservationReadService readService, IReservationWriteService writeService) : ControllerBase
     {
-        IMapper _mapper = mapper;
-        AppDbContext _context = context;
+        IReservationReadService _readService = readService;
+        IReservationWriteService _writeService = writeService;
 
-
+        /// <summary>
+        /// Vrátí všechny rezervace s nerozhodutým stavem.
+        /// </summary>
+        /// <returns>Reprezentace nerozhodnutých rezervací.</returns>
+        [Authorize(Roles = "Admin")]
         [HttpGet("requests")]
         [ProducesResponseType(200)]
-        public async Task<ActionResult<ICollection<ReservationDto>>> GetRequests(int spaceNumber)
+        public async Task<ActionResult<ICollection<ReservationDto>>> GetRequests()
         {
-            var result = await _context.Reservations
-                .Where(p => p.StateId == 1)
-                .Select(r => _mapper.Map<ReservationDto>(r))
-                .ToListAsync();
-            return Ok(result);
+            var call = await _readService.GetFutureRequests();
+            return Ok(call.Object);
         }
 
-
+        /// <summary>
+        /// Vrátí všechny rezervace přihlášeného uživatele.
+        /// </summary>
+        /// <returns>Reprezentace rezervací uživatele.</returns>
         [HttpGet("my")]
         [ProducesResponseType(200)]
-        public async Task<ActionResult<ICollection<ReservationDto>>> GetMy(int spaceNumber)
+        public async Task<ActionResult<ICollection<ReservationDto>>> GetMy()
         {
-            var result = await _context.Reservations
-                //.Where(p => p.UserId == "kkrdb")
-                .OrderBy(r => r.StateId)
-                .Select(r => _mapper.Map<ReservationDto>(r))
-                .ToListAsync();
-            return Ok(result);
+            var call = await _readService.GetByUser(User);
+            return Ok(call.Object);
         }
 
+        /// <summary>
+        /// Vrátí všechny rezervace daného místa.
+        /// </summary>
+        /// <returns>Reprezentace rezervací místa.</returns>
+        [HttpGet("{spaceNumber}")]
+        [ProducesResponseType(200)]
+        public async Task<ActionResult<ICollection<ReservationDto>>> GetBySpace(int spaceNumber)
+        {
+            var call = await _readService.GetFutureBySpace(spaceNumber);
+            return Ok(call.Object);
+        }
+
+        /// <summary>
+        /// Požádá o rezervaci, pokud existuje volné místo.
+        /// </summary>
+        /// <param name="request">Reprezentace požadavku na rezervaci.</param>
+        /// <returns>Reprezentace vytvořenéhé rezervace.</returns>
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<ReservationDto>> PostNew(ReservationRequestDto request)
+        public async Task<ActionResult<ReservationDto>> PostRequest(ReservationRequestDto request)
         {
-            await using var transaction = await context.Database.BeginTransactionAsync();
-
-            int? avialible = await _context.Spaces
-                .Where(p => !p.Reservations
-                    .Where(r => r.BeginsAt < request.EndsAt & r.EndsAt > request.BeginsAt).Any()
-                )
-                .Select(p => p.SpaceNumber)
-                .FirstOrDefaultAsync();
-
-            if (avialible == null) {
-                await transaction.RollbackAsync();
-                return BadRequest($"Všechna místo jsou již rezervována.");
+            var call = await _writeService.Create(request, User);
+            if (!call.Success)
+            {
+                if (call.ErrorCode == Errors.NotFound)
+                {
+                    return BadRequest($"Všechna místo jsou již rezervována.");
+                }
             }
-            var newReservation = _mapper.Map<Reservation>(request);
-            newReservation.SpaceNumber = (int)avialible;
-            newReservation.StateId = 1;
-            newReservation.UserId = "iugzkiuoi";
-            _context.Add(newReservation);
-            await _context.SaveChangesAsync();
-
-            await transaction.CommitAsync();
-
-            return Created("api/Reservations", _mapper.Map<ReservationDto>(newReservation)); 
+            return Created("api/Reservations/my", call.Object); 
         }
 
+        /// <summary>
+        /// Potvrdí rezervaci, pokud existuje.
+        /// </summary>
+        /// <param name="id">Číslo rezervace</param>
+
+        [Authorize(Roles = "Admin")]
         [HttpPatch("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
         public async Task<ActionResult> Confirm(Guid id)
         {
-            var stub = new Reservation { Id = id };
-            _context.Attach(stub);
-            _context.Entry(stub).Property(p => p.StateId).CurrentValue = 2;
-            _context.Entry(stub).Property(p => p.StateId).IsModified = true;
-
-            try
+            var call = await _writeService.ConfirmRequest(id);
+            if (!call.Success)
             {
-                await _context.SaveChangesAsync();
-            } catch (DbUpdateException)
-            {
-                return NotFound($"Rezervace {id} neexistuje.");
+                if (call.ErrorCode == Errors.NotFound)
+                {
+                    return NotFound($"Rezervace {id} neexistuje.");
+                }
+                if (call.ErrorCode == Errors.InvalidState)
+                {
+                    return BadRequest($"Rezervaci {id} nelze potvrdit.");
+                }
             }
             return NoContent();
         }
 
+        /// <summary>
+        /// Potvrdí všechny nerozhodnuté rezervace.
+        /// </summary>
+        [Authorize(Roles = "Admin")]
         [HttpPatch("confirm-all")]
         [ProducesResponseType(204)]
-        public async Task<ActionResult> ConfirmAll(Guid id)
+        public async Task<ActionResult> ConfirmAll()
         {
-            await _context.Reservations.Where(p => p.StateId == 1)
-                .ExecuteUpdateAsync(setters => setters.SetProperty(p => p.StateId, 2));
+            await _writeService.ConfirmAllRequests();
             return NoContent();
         }
+
+        /// <summary>
+        /// Zruší rezervaci.
+        /// </summary>
+        /// <param name="id">Číslo rezervace ke zrušení.</param>
 
         [HttpDelete("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
         public async Task<ActionResult> Cancel(Guid id)
         {
-            var stub = new Reservation { Id = id };
-            _context.Attach(stub);
-            _context.Entry(stub).Property(p => p.StateId).CurrentValue = 3;
-            _context.Entry(stub).Property(p => p.StateId).IsModified = true;
-
-            try
+            var call = await _writeService.CancelReservation(id, User);
+            if (!call.Success)
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                return NotFound($"Rezervace {id} neexistuje.");
+                if (call.ErrorCode == Errors.NotFound)
+                {
+                    return NotFound($"Rezervace {id} neexistuje.");
+                }
+                if (call.ErrorCode == Errors.Unauthorized)
+                {
+                    return Forbid();
+                }
             }
             return NoContent();
         }

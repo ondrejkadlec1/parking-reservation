@@ -1,4 +1,4 @@
-﻿namespace ParkingReservation.Dtos
+﻿namespace ParkingReservation.Dtos.Blockings
 {
     public record BlockingDto
     {
