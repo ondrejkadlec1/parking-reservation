@@ -46,7 +46,7 @@ namespace ParkingReservation.Services
         {
             var userId = user.FindFirstValue(ClaimTypes.NameIdentifier);
             var result = await _context.Reservations
-                .Where(p => p.UserId == userId && p.StateId == 1)
+                .Where(p => p.UserId == userId && p.TypeId == 1)
                 .OrderBy(r => r.StateId)
                 .ThenByDescending(r => r.CreatedAt)
                 .Include(r => r.State)

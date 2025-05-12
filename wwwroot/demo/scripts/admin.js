@@ -97,7 +97,7 @@ function getRequests() {
                 <td>${row.beginsAt}</td>
                 <td>${row.endsAt}</td>
                 <td>${row.spaceNumber}</td>
-                <td>${row.issuedAt}</td>
+                <td>${row.createdAt}</td>
                 <td>${row.userId}</td>
                 <td><button class="confirm-button" data-id=${row.id}>Potvrdit</button></td>
                 <td><button class="cancel-button" data-id=${row.id}>Zrušit</button></td>
@@ -135,6 +135,7 @@ function getSpaceDetail(id) {
         method: 'GET',
         dataType: 'json',
         success: function (response) {
+            console.log(response);
             $(`#sp-${id}`).after(
                 `<tr class="calendar">
                     <td colspan=5>
@@ -143,7 +144,7 @@ function getSpaceDetail(id) {
                                 <th>Číslo rezervace/blokace</th>
                                 <th>Od</th>
                                 <th>Do</th>
-                                <th>Zrušit</th>
+                                <th></th>
                             </tr>
                         </table>
                     <td>
@@ -155,8 +156,16 @@ function getSpaceDetail(id) {
                     <td>${row.id}</td>
                     <td>${row.beginsAt}</td>
                     <td>${row.endsAt}</td>
-                    <td><button class="cancel-button" data-id=${row.id}>Zrušit</button></td>
+
                 </tr>`);
+                if (row.$type == 'normal') {
+                    $(`#cal-${row.id}`).append(
+                        `<td><button class="cancel-button" data-id=${row.id}>Zrušit</button></td>`);
+                }
+                if (row.$type == 'blocking') {
+                    $(`#cal-${row.id}`).append(
+                        `<td>${row.comment}</td>`);
+                }
             }
 
         },
@@ -286,7 +295,7 @@ function displayBlocking(blocking) {
             <td>${blocking.endsAt}</td>
             <td>${blocking.spaceNumber}</td>
             <td>${blocking.createdAt}</td>
-            <td>${blocking.adminId}</td>
+            <td>${blocking.comment}</td>
             <td><button class="unblock-button" data-id=${blocking.id}>Zrušit</button></td>
         </tr>`);
 }

@@ -28,7 +28,7 @@ namespace ParkingReservation.Services
             {
                 return new ServiceCallResult() { ErrorCode = Errors.Unauthorized };
             }
-            if (reservation.EndsAt < DateTime.Now)
+            if (reservation.EndsAt < DateTime.UtcNow)
             {
                 return new ServiceCallResult() { ErrorCode = Errors.InvalidState, Message = "Nelze zrušit rezervaci po skončení." };
             }

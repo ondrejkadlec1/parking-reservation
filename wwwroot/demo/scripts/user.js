@@ -10,7 +10,7 @@
     $("body").on("click", "#res-button", makeReservation);
 
     $("body").on("click", ".cancel-button", function () {
-        var id = $(this).parent().parent().attr("id");
+        var id = $(this).attr("data-id");
         cancelReservation(id);
     });
 
@@ -78,7 +78,7 @@ function cancelReservation(id) {
         type: "DELETE",
         url: `https://localhost:7036/api/Reservations/${id}`,
         success: function () {
-            $(`#${id}`).find(".state").text('zrušeno');
+            $(`#res-${id}`).find(".state").text('zrušeno');
         },
         error: function (jqXHR) {
             alert(jqXHR.responseText)
@@ -87,13 +87,15 @@ function cancelReservation(id) {
 }
 
 function displayReservation(reservation) {
-    $('#my').append(`<tr id=${reservation.id}>
+    $('#my').append(`<tr id="res-${reservation.id}">
             <td>${reservation.id}</td>
             <td>${reservation.beginsAt}</td>
             <td>${reservation.endsAt}</td>
             <td>${reservation.spaceNumber}</td>
-            <td>${reservation.issuedAt}</td>
+            <td>${reservation.createdAt}</td>
             <td class="state">${reservation.state}</td>
-            <td><button class="cancel-button">Zrušit</button></td>
         </tr>`);
+    if (reservation.isActive) {
+        $(`#res-${reservation.id}`).append(`<td><button data-id="${reservation.id}" class="cancel-button">Zrušit</button></td>`);
+    }
 }

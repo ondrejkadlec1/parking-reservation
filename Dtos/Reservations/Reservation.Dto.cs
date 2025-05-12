@@ -11,5 +11,6 @@ namespace ParkingReservation.Dtos.Reservations
         public string UserId { get; set; } = null!;
         public string State { get; set; } = null!;
         public int SpaceNumber { get; set; }
+        public bool IsActive { get; set; }
     }
 }
