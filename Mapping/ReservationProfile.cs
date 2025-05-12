@@ -9,8 +9,10 @@ namespace ParkingReservation.Mapping
         public ReservationProfile()
         {
             CreateMap<Reservation, ReservationDto>()
-                .ForMember(dest => dest.State, opt => opt.MapFrom(src => src.State.Name));
+                .ForMember(dest => dest.State, opt => opt.MapFrom(src => src.State.NameCs));
             CreateMap<ReservationRequestDto, Reservation>();
+            CreateMap<Reservation, BlockingDto>();
+            CreateMap<CreateBlockingDto, Reservation>();
         }
 
     }

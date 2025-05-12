@@ -1,14 +1,15 @@
 ﻿using ParkingReservation.Attributes;
 using ParkingReservation.Dtos.Interfaces;
 
-
 namespace ParkingReservation.Dtos.Reservations
 {
-    public record ReservationRequestDto : ITimeInterval
+    public record CreateBlockingDto : ITimeInterval
     {
-        [MinutesInAdvance(30)]
         public DateTime BeginsAt { get; set; }
+        [MinutesInAdvance(0)]
         public DateTime EndsAt { get; set; }
 
+        public int SpaceNumber { get; set; }
+        public string Comment { get; set; }
     }
 }

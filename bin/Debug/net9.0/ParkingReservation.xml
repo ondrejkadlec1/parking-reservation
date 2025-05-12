@@ -4,7 +4,7 @@
         <name>ParkingReservation</name>
     </assembly>
     <members>
-        <member name="M:ParkingReservation.Controllers.BlockingsController.Post(ParkingReservation.Dtos.Blockings.CreateBlockingDto)">
+        <member name="M:ParkingReservation.Controllers.BlockingsController.Post(ParkingReservation.Dtos.Reservations.CreateBlockingDto)">
             <summary>
             Vytvoří novou blokaci, pokud už místo není zablokované a zruší konfliktní rezervace.
             </summary>
@@ -48,7 +48,7 @@
         </member>
         <member name="M:ParkingReservation.Controllers.ReservationsController.Confirm(System.Guid)">
             <summary>
-            Potvrdí rezervaci, pokud existuje.
+            Potvrdí rezervaci.
             </summary>
             <param name="id">Číslo rezervace</param>
         </member>

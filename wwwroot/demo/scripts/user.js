@@ -29,8 +29,8 @@ function getSpaces() {
                 $('#avialible').append(`<button id="res-button">Rezervovat</span>`);
             }
         },
-        error: function (jqXHR, textStatus) {
-            console.error(textStatus, jqXHR);
+        error: function (jqXHR) {
+            alert(jqXHR.responseText)
         }
     });
 }
@@ -50,8 +50,8 @@ function makeReservation() {
             displayReservation(data);
             $('#make-reservation-result').append(`<p>Vytvořen požadavek na rezervaci číslo ${data.id}.</p>`);
         },
-        error: function (data) {
-            $('#make-reservation-result').append(`<p>${data.responseText}</p>`);
+        error: function (jqXHR) {
+            alert(jqXHR.responseText)
         }
     });
 }
@@ -80,8 +80,8 @@ function cancelReservation(id) {
         success: function () {
             $(`#${id}`).find(".state").text('zrušeno');
         },
-        error: function (jqXHR, textStatus) {
-            console.error(textStatus, jqXHR);
+        error: function (jqXHR) {
+            alert(jqXHR.responseText)
         }
     });
 }

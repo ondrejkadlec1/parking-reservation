@@ -4,10 +4,10 @@ using Microsoft.OData.ModelBuilder;
 namespace ParkingReservation.Attributes
 {
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
-    public class TimeInAdvance : ValidationAttribute
+    public class MinutesInAdvance : ValidationAttribute
     {
         TimeSpan _inAdvance;
-        public TimeInAdvance(int minutes)
+        public MinutesInAdvance(int minutes)
         {
             _inAdvance = TimeSpan.FromMinutes(minutes);
         }
@@ -20,7 +20,7 @@ namespace ParkingReservation.Attributes
                 {
                     return ValidationResult.Success;
                 }
-                return new ValidationResult($"Rezervace musí trvat {_inAdvance.Minutes} minut předem.");
+                return new ValidationResult($"Časový údaj musí být alespoň {_inAdvance.Minutes} minut v budoucnosti.");
             }
             return new ValidationResult("Wrong type.");
         }

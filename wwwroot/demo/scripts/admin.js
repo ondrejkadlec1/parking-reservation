@@ -52,7 +52,6 @@
 });
 
 function AddSpaces() {
-    console.log("ů");
     $("#add-op-result").empty();
     $.ajax({
         type: "POST",
@@ -63,11 +62,11 @@ function AddSpaces() {
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         success: function (data) {
-            displaySpace(data);
+            displaySpaces(data);
             $('#add-spaces-result').append(`<p>Přidána místa (${data.lenght}).</p>`);
         },
-        error: function (jqXHR, textStatus) {
-            console.error(textStatus, jqXHR);
+        error: function (jqXHR) {
+            alert(jqXHR.responseText)
         }
     });
 }
@@ -77,12 +76,10 @@ function getSpaces() {
         method: 'GET',
         dataType: 'json',
         success: function (response) {
-            for (var row of response) {
-                displaySpace(row);
-            }
+            displaySpaces(response)
         },
-        error: function (jqXHR, textStatus) {
-            console.error(textStatus, jqXHR);
+        error: function (jqXHR) {
+            alert(jqXHR.responseText)
         }
     });
 }
@@ -116,7 +113,7 @@ function getRequests() {
 
 function getBlockings() {
     $.ajax({
-        url: 'https://localhost:7036/api/Blockings',
+        url: 'https://localhost:7036/api/Blockings/my',
         method: 'GET',
         dataType: 'json',
         success: function (response) {
@@ -163,8 +160,8 @@ function getSpaceDetail(id) {
             }
 
         },
-        error: function (jqXHR, textStatus) {
-            console.error(textStatus, jqXHR);
+        error: function (jqXHR) {
+            alert(jqXHR.responseText)
         }
     });
 }
@@ -176,9 +173,11 @@ function blockSpaceDialog(spaceNumber) {
             <td>
                 <form class="block-form" data-space-number=${spaceNumber}>
                     <label for="begins-at">Začátek:</label>
-                    <input type="datetime-local" id="begins-at" name="begins-at" value="0">
+                    <input type="datetime-local" id="begins-at" name="begins-at" step"1800">
                     <label for="ends-at">Konec:</label>
-                    <input type="datetime-local" id="ends-at" name="ends-at" value="0">
+                    <input type="datetime-local" id="ends-at" name="ends-at" step"1800">
+                    <label for="comment">Komentář:</label>
+                    <input type="text" id="comment" name="comment">
                     <input type="submit">
                 </form>
             <td>
@@ -194,8 +193,8 @@ function deleteSpace(id) {
         success: function () {
             $(`#sp-${id}`).remove();
         },
-        error: function (jqXHR, textStatus) {
-            console.error(textStatus, jqXHR);
+        error: function (jqXHR) {
+            alert(jqXHR.responseText)
         }
     });
 }
@@ -209,8 +208,8 @@ function cancelReservation(id) {
             $(`#res-${id}`).remove();
             $(`#cal-${id}`).remove();
         },
-        error: function (jqXHR, textStatus) {
-            console.error(textStatus, jqXHR);
+        error: function (jqXHR) {
+            alert(jqXHR.responseText)
         }
     });
 }
@@ -223,8 +222,8 @@ function confirmReservation(id) {
         success: function () {
             $(`#res-${id}`).remove();
         },
-        error: function (jqXHR, textStatus) {
-            console.error(textStatus, jqXHR);
+        error: function (jqXHR) {
+            alert(jqXHR.responseText)
         }
     });
 }
@@ -246,13 +245,13 @@ function confirmAll() {
 function unblock(id) {
     $.ajax({
         type: "DELETE",
-        url: `https://localhost:7036/api/Blockings/${id}`,
+        url: `https://localhost:7036/api/Reservations/${id}`,
         dataType: "json",
         success: function () {
             $(`#bl-${id}`).remove();
         },
-        error: function (jqXHR, textStatus) {
-            console.error(textStatus, jqXHR);
+        error: function (jqXHR) {
+            alert(jqXHR.responseText)
         }
     });
 }
@@ -265,6 +264,7 @@ function blockSpace(spaceNumber) {
         data: JSON.stringify({
             beginsAt: $('#begins-at').val() + "Z",
             endsAt: $('#ends-at').val() + "Z",
+            comment: $('#comment').val(),
             spaceNumber: spaceNumber,
         }),
         dataType: "json",
@@ -273,8 +273,8 @@ function blockSpace(spaceNumber) {
             $('#block-space-result').append(`<p>Vytvořena blokace číslo ${data.id}.</p>`);
             displayBlocking(data);
         },
-        error: function (data) {
-            $('#block-space-result').append(`<p>${data.responseText}</p>`);
+        error: function (jqXHR) {
+            alert(jqXHR.responseText)
         }
     });
 }
@@ -291,12 +291,14 @@ function displayBlocking(blocking) {
         </tr>`);
 }
 
-function displaySpace(space) {
-    $('#all-spaces').append(`<tr id="sp-${space.spaceNumber}">
-            <td>${space.spaceNumber}</td>
-            <td>${space.createdAt}</td>
-            <td><button class="detail-button" data-space-number=${space.spaceNumber}>Detail</button></td>
-            <td><button class="block-dialog-button" data-space-number=${space.spaceNumber}>Blokovat</button</td>
-            <td><button class="delete-space-button" data-space-number=${space.spaceNumber}>Odstranit</button></td>
-        </tr>`);
+function displaySpaces(spaces) {
+    for (var space of spaces) {
+        $('#all-spaces').append(`<tr id="sp-${space.spaceNumber}">
+                <td>${space.spaceNumber}</td>
+                <td>${space.createdAt}</td>
+                <td><button class="detail-button" data-space-number=${space.spaceNumber}>Detail</button></td>
+                <td><button class="block-dialog-button" data-space-number=${space.spaceNumber}>Blokovat</button</td>
+                <td><button class="delete-space-button" data-space-number=${space.spaceNumber}>Odstranit</button></td>
+            </tr>`);
+    }
 }

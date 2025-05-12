@@ -15,26 +15,26 @@
     <StaticWebAssetEndpoint Include="_content/ParkingReservation/demo/index.html">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\demo\index.html'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-q49tPeXE0I1PPNSHD94BgpB9pYklqNk8PBVzL188U\u002BQ="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"1434"},{"Name":"Content-Type","Value":"text/html"},{"Name":"ETag","Value":"\u0022q49tPeXE0I1PPNSHD94BgpB9pYklqNk8PBVzL188U\u002BQ=\u0022"},{"Name":"Last-Modified","Value":"Tue, 06 May 2025 16:53:33 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-OD75\u002B4h48ZYxjfIXOYMh8qnqwyzJIFJBxhDaSBccWg4="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"1434"},{"Name":"Content-Type","Value":"text/html"},{"Name":"ETag","Value":"\u0022OD75\u002B4h48ZYxjfIXOYMh8qnqwyzJIFJBxhDaSBccWg4=\u0022"},{"Name":"Last-Modified","Value":"Mon, 12 May 2025 09:16:10 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
-    <StaticWebAssetEndpoint Include="_content/ParkingReservation/demo/index.nph8ks8ehr.html">
+    <StaticWebAssetEndpoint Include="_content/ParkingReservation/demo/index.owuzztmvty.html">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\demo\index.html'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"nph8ks8ehr"},{"Name":"integrity","Value":"sha256-q49tPeXE0I1PPNSHD94BgpB9pYklqNk8PBVzL188U\u002BQ="},{"Name":"label","Value":"_content/ParkingReservation/demo/index.html"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1434"},{"Name":"Content-Type","Value":"text/html"},{"Name":"ETag","Value":"\u0022q49tPeXE0I1PPNSHD94BgpB9pYklqNk8PBVzL188U\u002BQ=\u0022"},{"Name":"Last-Modified","Value":"Tue, 06 May 2025 16:53:33 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"owuzztmvty"},{"Name":"integrity","Value":"sha256-OD75\u002B4h48ZYxjfIXOYMh8qnqwyzJIFJBxhDaSBccWg4="},{"Name":"label","Value":"_content/ParkingReservation/demo/index.html"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1434"},{"Name":"Content-Type","Value":"text/html"},{"Name":"ETag","Value":"\u0022OD75\u002B4h48ZYxjfIXOYMh8qnqwyzJIFJBxhDaSBccWg4=\u0022"},{"Name":"Last-Modified","Value":"Mon, 12 May 2025 09:16:10 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
-    <StaticWebAssetEndpoint Include="_content/ParkingReservation/demo/scripts/admin.3fto4hr1q5.js">
+    <StaticWebAssetEndpoint Include="_content/ParkingReservation/demo/scripts/admin.ekpxpv6kgp.js">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\demo\scripts\admin.js'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"3fto4hr1q5"},{"Name":"integrity","Value":"sha256-7wJwmYQoq3NElVJvdL2EQ5OqHQwcOqa5m20OJf/etNU="},{"Name":"label","Value":"_content/ParkingReservation/demo/scripts/admin.js"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"9391"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u00227wJwmYQoq3NElVJvdL2EQ5OqHQwcOqa5m20OJf/etNU=\u0022"},{"Name":"Last-Modified","Value":"Wed, 07 May 2025 21:05:23 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"ekpxpv6kgp"},{"Name":"integrity","Value":"sha256-rvTdtZJsmuMp/lvHxUkwloQio19\u002BYxZUv55KayA33jI="},{"Name":"label","Value":"_content/ParkingReservation/demo/scripts/admin.js"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"9547"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022rvTdtZJsmuMp/lvHxUkwloQio19\u002BYxZUv55KayA33jI=\u0022"},{"Name":"Last-Modified","Value":"Mon, 12 May 2025 10:45:35 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/ParkingReservation/demo/scripts/admin.js">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\demo\scripts\admin.js'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-7wJwmYQoq3NElVJvdL2EQ5OqHQwcOqa5m20OJf/etNU="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"9391"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u00227wJwmYQoq3NElVJvdL2EQ5OqHQwcOqa5m20OJf/etNU=\u0022"},{"Name":"Last-Modified","Value":"Wed, 07 May 2025 21:05:23 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-rvTdtZJsmuMp/lvHxUkwloQio19\u002BYxZUv55KayA33jI="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"9547"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022rvTdtZJsmuMp/lvHxUkwloQio19\u002BYxZUv55KayA33jI=\u0022"},{"Name":"Last-Modified","Value":"Mon, 12 May 2025 10:45:35 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/ParkingReservation/demo/scripts/auth.js">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\demo\scripts\auth.js'))</AssetFile>
@@ -60,17 +60,17 @@
       <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"sa0jznidgl"},{"Name":"integrity","Value":"sha256-RKdfK3eKGKAGOeagVtyOm0IS/w2MwDD0k4Qyx8Vi03w="},{"Name":"label","Value":"_content/ParkingReservation/demo/scripts/jQuery.js"}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"399907"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022RKdfK3eKGKAGOeagVtyOm0IS/w2MwDD0k4Qyx8Vi03w=\u0022"},{"Name":"Last-Modified","Value":"Fri, 02 May 2025 11:34:26 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ParkingReservation/demo/scripts/user.4nxnfvez21.js">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\demo\scripts\user.js'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"4nxnfvez21"},{"Name":"integrity","Value":"sha256-EPWW3oGD8q5af0hYSVtV9Yo6jrXl3lvhOpFdhvhtoeU="},{"Name":"label","Value":"_content/ParkingReservation/demo/scripts/user.js"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"3089"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022EPWW3oGD8q5af0hYSVtV9Yo6jrXl3lvhOpFdhvhtoeU=\u0022"},{"Name":"Last-Modified","Value":"Fri, 09 May 2025 23:25:42 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/ParkingReservation/demo/scripts/user.js">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\demo\scripts\user.js'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-8qn20PXDADUOm2V9YQ36DJflLp5BkaUvhyxyCcf6WYY="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"3017"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u00228qn20PXDADUOm2V9YQ36DJflLp5BkaUvhyxyCcf6WYY=\u0022"},{"Name":"Last-Modified","Value":"Fri, 09 May 2025 22:58:37 GMT"}]]]></ResponseHeaders>
-    </StaticWebAssetEndpoint>
-    <StaticWebAssetEndpoint Include="_content/ParkingReservation/demo/scripts/user.m76a0bmwf2.js">
-      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\demo\scripts\user.js'))</AssetFile>
-      <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"m76a0bmwf2"},{"Name":"integrity","Value":"sha256-8qn20PXDADUOm2V9YQ36DJflLp5BkaUvhyxyCcf6WYY="},{"Name":"label","Value":"_content/ParkingReservation/demo/scripts/user.js"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"3017"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u00228qn20PXDADUOm2V9YQ36DJflLp5BkaUvhyxyCcf6WYY=\u0022"},{"Name":"Last-Modified","Value":"Fri, 09 May 2025 22:58:37 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-EPWW3oGD8q5af0hYSVtV9Yo6jrXl3lvhOpFdhvhtoeU="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"3089"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022EPWW3oGD8q5af0hYSVtV9Yo6jrXl3lvhOpFdhvhtoeU=\u0022"},{"Name":"Last-Modified","Value":"Fri, 09 May 2025 23:25:42 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/ParkingReservation/demo/styles/style.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\demo\styles\style.css'))</AssetFile>

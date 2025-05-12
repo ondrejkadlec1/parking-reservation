@@ -41,13 +41,21 @@ namespace ParkingReservation.Controllers
         /// <returns>Počet míst a obscazených míst.</returns>
         [HttpGet("avialible")]
         [ProducesResponseType(200)]
-        public async Task<ActionResult<Availability>> GetAvailability(DateTime from, DateTime till)
+        [ProducesResponseType(400)]
+        public async Task<ActionResult<Availability>> GetAvailability(
+            DateTime from, 
+            DateTime till)
         {
+            if (from > till || from < DateTime.UtcNow)
+            {
+                return BadRequest("Zadán neplatný vstup.");
+            }
+
             int total = await _context.Spaces.CountAsync();
             int occupied = await _context.Spaces
                 .Include(p => p.Reservations)
                 .Where(p => p.Reservations
-                    .Where(r => r.BeginsAt < till && r.EndsAt > from).Any()
+                    .Where(r => r.StateId != 3 && r.BeginsAt < till && r.EndsAt > from).Any()
                 ).CountAsync();
             bool is_avialible = total > occupied;
 
@@ -79,7 +87,7 @@ namespace ParkingReservation.Controllers
                 _context.Add(space);
             }
             await _context.SaveChangesAsync();
-            var output = result.Select(p => _mapper.Map<SpaceDto>(p));
+            var output = result.Select(_mapper.Map<SpaceDto>);
 
             return Ok(output);
         }

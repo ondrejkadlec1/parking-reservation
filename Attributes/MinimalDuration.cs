@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using ParkingReservation.Dtos.Interfaces;
 using ParkingReservation.Dtos.Reservations;
 
 namespace ParkingReservation.Attributes
 {
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Interface, AllowMultiple = false)]
     public class MinimalDuration: ValidationAttribute
     {
         TimeSpan _minimalDuration;
@@ -13,9 +14,9 @@ namespace ParkingReservation.Attributes
         }
         protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
-            if (value is ReservationRequestDto)
+            if (value is ITimeInterval)
             {
-                var dto = (ReservationRequestDto)value;
+                var dto = (ITimeInterval)value;
                 if (dto.EndsAt - dto.BeginsAt >= _minimalDuration)
                 {
                     return ValidationResult.Success;

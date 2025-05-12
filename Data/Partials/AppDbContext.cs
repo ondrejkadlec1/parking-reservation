@@ -13,13 +13,6 @@ namespace ParkingReservation.Data
                     .HasDefaultValueSql("gen_random_uuid()")
                     .ValueGeneratedOnAdd();
             });
-
-            modelBuilder.Entity<Blocking>(entity =>
-            {
-                entity.Property(e => e.Id)
-                    .HasDefaultValueSql("gen_random_uuid()")
-                    .ValueGeneratedOnAdd();
-            });
         }
     }
 }

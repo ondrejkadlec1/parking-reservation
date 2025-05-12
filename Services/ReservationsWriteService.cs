@@ -4,7 +4,6 @@ using ParkingReservation.Services.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using ParkingReservation.Data;
-using ParkingReservation.Dtos.Blockings;
 using ParkingReservation.Dtos.Reservations;
 using ParkingReservation.Models;
 using ParkingReservation.Services.Interfaces;
@@ -23,7 +22,8 @@ namespace ParkingReservation.Services
             {
                 return new ServiceCallResult() { ErrorCode = Errors.NotFound };
             }
-            var authorization = await _authorizationService.AuthorizeAsync(user, reservation, "OwnerOrAdmin");
+            var policy = reservation.TypeId == 1 ? "OwnerOrAdmin" : "Owner";
+            var authorization = await _authorizationService.AuthorizeAsync(user, reservation, policy);
             if (!authorization.Succeeded)
             {
                 return new ServiceCallResult() { ErrorCode = Errors.Unauthorized };
@@ -58,9 +58,19 @@ namespace ParkingReservation.Services
                 {
                     return new ServiceCallResult { ErrorCode = Errors.NotFound };
                 }
+                if (request.StateId == 2)
+                {
+                    return new ServiceCallResult { 
+                        ErrorCode = Errors.InvalidState,
+                        Message = $"Rezervace {id} už je potvrzena."
+                    };
+                }
                 if (request.BeginsAt < DateTime.UtcNow || request.StateId != 1)
                 {
-                    return new ServiceCallResult { ErrorCode = Errors.InvalidState };
+                    return new ServiceCallResult { 
+                        ErrorCode = Errors.InvalidState, 
+                        Message = $"Rezervaci {id} nelze potvrdit."
+                    };
                 }
 
                 request.StateId = 2;
@@ -77,7 +87,7 @@ namespace ParkingReservation.Services
             {
                 int? available= await _context.Spaces
                     .Where(p => !p.Reservations
-                        .Where(r => r.BeginsAt < dto.EndsAt & r.EndsAt > dto.BeginsAt).Any()
+                        .Where(r => r.BeginsAt < dto.EndsAt && r.EndsAt > dto.BeginsAt && r.StateId != 3).Any()
                 )
                 .Select(p => p.SpaceNumber)
                     .FirstOrDefaultAsync();
@@ -88,6 +98,7 @@ namespace ParkingReservation.Services
                 }
                 var newReservation = _mapper.Map<Reservation>(dto);
                 newReservation.SpaceNumber = (int)available;
+                newReservation.TypeId = 1;
                 newReservation.StateId = 1;
                 newReservation.UserId = user.FindFirstValue(ClaimTypes.NameIdentifier);
                 _context.Add(newReservation);
@@ -104,17 +115,32 @@ namespace ParkingReservation.Services
 
         }
 
-        public async Task<ServiceCallResult<ReservationDto>> CreateBlocking(CreateBlockingDto dto, ClaimsPrincipal user)
+        public async Task<ServiceCallResult<BlockingDto>> CreateBlocking(CreateBlockingDto dto, ClaimsPrincipal user)
         {
             await using (var transaction = await context.Database.BeginTransactionAsync())
             {
-                var space = _context.Spaces.FirstOrDefaultAsync(p => p.SpaceNumber == dto.SpaceNumber);
+                var space = await _context.Spaces.FirstOrDefaultAsync(p => p.SpaceNumber == dto.SpaceNumber);
                 if (space == null)
                 {
-                    return new ServiceCallResult<ReservationDto> { ErrorCode = Errors.NotFound };
+                    return new ServiceCallResult<BlockingDto> { ErrorCode = Errors.NotFound };
                 }
+                var conflicts = await _context.Reservations
+                    .Where(r => r.BeginsAt < dto.EndsAt && r.EndsAt > dto.BeginsAt && r.StateId != 3)
+                    .ToListAsync();
+                if (conflicts.Where(p => p.TypeId == 2).Any())
+                {
+                    return new ServiceCallResult<BlockingDto> { ErrorCode = Errors.Conflict };
+                }
+
+                foreach (var conflict in conflicts)
+                {
+                    conflict.StateId = 3;
+                }
+                await _context.SaveChangesAsync();
+
                 var blocking = _mapper.Map<Reservation>(dto);
-                blocking.StateId = 3;
+                blocking.TypeId = 2;
+                blocking.StateId = 2;
                 blocking.UserId = user.FindFirstValue(ClaimTypes.NameIdentifier);
                 _context.Add(blocking);
 
@@ -122,9 +148,9 @@ namespace ParkingReservation.Services
                 await _context.Entry(blocking).Reference(p => p.State).LoadAsync();
 
                 await transaction.CommitAsync();
-                return new ServiceCallResult<ReservationDto>
+                return new ServiceCallResult<BlockingDto>
                 {
-                    Object = _mapper.Map<ReservationDto>(blocking),
+                    Object = _mapper.Map<BlockingDto>(blocking),
                     Success = true
                 };
             }

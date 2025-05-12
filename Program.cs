@@ -1,4 +1,6 @@
 using System.Reflection;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -13,7 +15,10 @@ using ParkingReservation.Services.Interfaces;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers()
-    .AddNewtonsoftJson();
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
 
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen(options =>

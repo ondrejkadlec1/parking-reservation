@@ -11,7 +11,5 @@ public partial class Space
 
     public DateTime CreatedAt { get; set; }
 
-    public virtual ICollection<Blocking> Blockings { get; set; } = new List<Blocking>();
-
     public virtual ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();
 }

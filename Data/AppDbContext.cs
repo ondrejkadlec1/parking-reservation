@@ -16,9 +16,11 @@ public partial class AppDbContext : DbContext
     {
     }
 
-    public virtual DbSet<Blocking> Blockings { get; set; }
+    public virtual DbSet<Admin> Admins { get; set; }
 
     public virtual DbSet<Reservation> Reservations { get; set; }
+
+    public virtual DbSet<ReservationType> ReservationTypes { get; set; }
 
     public virtual DbSet<Space> Spaces { get; set; }
 
@@ -30,35 +32,19 @@ public partial class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Blocking>(entity =>
+        modelBuilder.Entity<Admin>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("blockings_pkey");
+            entity.HasKey(e => e.Id).HasName("admins_pkey");
 
-            entity.ToTable("blockings");
-
-            entity.HasIndex(e => e.SpaceNumber, "index_spn_blockings");
+            entity.ToTable("admins");
 
             entity.Property(e => e.Id)
-                .HasDefaultValueSql("gen_random_uuid()")
+                .ValueGeneratedNever()
                 .HasColumnName("id");
-            entity.Property(e => e.AdminId)
-                .HasMaxLength(64)
-                .HasColumnName("admin_id");
-            entity.Property(e => e.BeginsAt)
-                .HasPrecision(0)
-                .HasColumnName("begins_at");
-            entity.Property(e => e.CreatedAt)
+            entity.Property(e => e.AddedAt)
                 .HasPrecision(2)
                 .HasDefaultValueSql("now()")
-                .HasColumnName("created_at");
-            entity.Property(e => e.EndsAt)
-                .HasPrecision(0)
-                .HasColumnName("ends_at");
-            entity.Property(e => e.SpaceNumber).HasColumnName("space_number");
-
-            entity.HasOne(d => d.SpaceNumberNavigation).WithMany(p => p.Blockings)
-                .HasForeignKey(d => d.SpaceNumber)
-                .HasConstraintName("blockings_space_number_fkey");
+                .HasColumnName("added_at");
         });
 
         modelBuilder.Entity<Reservation>(entity =>
@@ -75,17 +61,21 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.BeginsAt)
                 .HasPrecision(0)
                 .HasColumnName("begins_at");
+            entity.Property(e => e.Comment)
+                .HasMaxLength(256)
+                .HasColumnName("comment");
+            entity.Property(e => e.CreatedAt)
+                .HasPrecision(2)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("created_at");
             entity.Property(e => e.EndsAt)
                 .HasPrecision(0)
                 .HasColumnName("ends_at");
-            entity.Property(e => e.IssuedAt)
-                .HasPrecision(2)
-                .HasDefaultValueSql("now()")
-                .HasColumnName("issued_at");
             entity.Property(e => e.SpaceNumber).HasColumnName("space_number");
             entity.Property(e => e.StateId)
                 .HasDefaultValue(1)
                 .HasColumnName("state_id");
+            entity.Property(e => e.TypeId).HasColumnName("type_id");
             entity.Property(e => e.UserId)
                 .HasMaxLength(64)
                 .HasColumnName("user_id");
@@ -98,6 +88,23 @@ public partial class AppDbContext : DbContext
                 .HasForeignKey(d => d.StateId)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("reservations_state_id_fkey");
+
+            entity.HasOne(d => d.Type).WithMany(p => p.Reservations)
+                .HasForeignKey(d => d.TypeId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("reservations_type_id_fkey");
+        });
+
+        modelBuilder.Entity<ReservationType>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("reservation_types_pkey");
+
+            entity.ToTable("reservation_types");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Name)
+                .HasMaxLength(64)
+                .HasColumnName("name");
         });
 
         modelBuilder.Entity<Space>(entity =>
@@ -126,6 +133,9 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.Name)
                 .HasMaxLength(64)
                 .HasColumnName("name");
+            entity.Property(e => e.NameCs)
+                .HasMaxLength(64)
+                .HasColumnName("name_cs");
         });
 
         OnModelCreatingPartial(modelBuilder);

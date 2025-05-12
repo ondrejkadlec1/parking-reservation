@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ParkingReservation.Dtos.Reservations;
+using ParkingReservation.Dtos.Interfaces;
 using ParkingReservation.Services.Interfaces;
-using Microsoft.Graph.Models;
 
 namespace ParkingReservation.Controllers
 {
@@ -38,7 +38,7 @@ namespace ParkingReservation.Controllers
         [ProducesResponseType(200)]
         public async Task<ActionResult<ICollection<ReservationDto>>> GetMy()
         {
-            var call = await _readService.GetByUser(User);
+            var call = await _readService.GetNormalByUser(User);
             return Ok(call.Object);
         }
 
@@ -48,9 +48,14 @@ namespace ParkingReservation.Controllers
         /// <returns>Reprezentace rezervací místa.</returns>
         [HttpGet("{spaceNumber}")]
         [ProducesResponseType(200)]
-        public async Task<ActionResult<ICollection<ReservationDto>>> GetBySpace(int spaceNumber)
+        [ProducesResponseType(400)]
+        public async Task<ActionResult<ICollection<IReservationDto>>> GetBySpace(int spaceNumber)
         {
             var call = await _readService.GetFutureBySpace(spaceNumber);
+            if (!call.Success && call.ErrorCode == Errors.NotFound)
+            {
+                return NotFound($"Místo {spaceNumber} neexistuje.");
+            }
             return Ok(call.Object);
         }
 
@@ -62,7 +67,6 @@ namespace ParkingReservation.Controllers
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        [ProducesResponseType(404)]
         public async Task<ActionResult<ReservationDto>> PostRequest(ReservationRequestDto request)
         {
             var call = await _writeService.Create(request, User);
@@ -77,7 +81,7 @@ namespace ParkingReservation.Controllers
         }
 
         /// <summary>
-        /// Potvrdí rezervaci, pokud existuje.
+        /// Potvrdí rezervaci.
         /// </summary>
         /// <param name="id">Číslo rezervace</param>
 
@@ -96,7 +100,7 @@ namespace ParkingReservation.Controllers
                 }
                 if (call.ErrorCode == Errors.InvalidState)
                 {
-                    return BadRequest($"Rezervaci {id} nelze potvrdit.");
+                    return BadRequest(call.Message);
                 }
             }
             return NoContent();
@@ -121,6 +125,7 @@ namespace ParkingReservation.Controllers
 
         [HttpDelete("{id}")]
         [ProducesResponseType(204)]
+        [ProducesResponseType(403)]
         [ProducesResponseType(404)]
         public async Task<ActionResult> Cancel(Guid id)
         {
