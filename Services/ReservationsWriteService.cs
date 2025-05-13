@@ -7,6 +7,7 @@ using ParkingReservation.Data;
 using ParkingReservation.Dtos.Reservations;
 using ParkingReservation.Models;
 using ParkingReservation.Services.Interfaces;
+using Microsoft.Identity.Web;
 
 namespace ParkingReservation.Services
 {
@@ -96,19 +97,22 @@ namespace ParkingReservation.Services
                 {
                     return new ServiceCallResult<ReservationDto> { ErrorCode = Errors.NotFound };
                 }
-                var newReservation = _mapper.Map<Reservation>(dto);
-                newReservation.SpaceNumber = (int)available;
-                newReservation.TypeId = 1;
-                newReservation.StateId = 1;
-                newReservation.UserId = user.FindFirstValue(ClaimTypes.NameIdentifier);
-                _context.Add(newReservation);
+                var reservation = _mapper.Map<Reservation>(dto);
+                reservation.SpaceNumber = (int)available;
+                reservation.TypeId = 1;
+                reservation.StateId = 1;
+                reservation.UserId = user.GetObjectId();
+                _context.Add(reservation);
                 await _context.SaveChangesAsync();
-                await _context.Entry(newReservation).Reference(p => p.State).LoadAsync();
+                await _context.Entry(reservation).Reference(p => p.State).LoadAsync();
 
                 await transaction.CommitAsync();
+
+                var result = _mapper.Map<ReservationDto>(reservation);
+                result.User = user.GetDisplayName();
                 return new ServiceCallResult<ReservationDto>
                 {
-                    Object = _mapper.Map<ReservationDto>(newReservation),
+                    Object = result,
                     Success = true
                 };
             }
@@ -141,16 +145,19 @@ namespace ParkingReservation.Services
                 var blocking = _mapper.Map<Reservation>(dto);
                 blocking.TypeId = 2;
                 blocking.StateId = 2;
-                blocking.UserId = user.FindFirstValue(ClaimTypes.NameIdentifier);
+                blocking.UserId = user.GetObjectId();
                 _context.Add(blocking);
 
                 await _context.SaveChangesAsync();
                 await _context.Entry(blocking).Reference(p => p.State).LoadAsync();
 
                 await transaction.CommitAsync();
+
+                var result = _mapper.Map<BlockingDto>(blocking);
+                result.User = user.GetDisplayName();
                 return new ServiceCallResult<BlockingDto>
                 {
-                    Object = _mapper.Map<BlockingDto>(blocking),
+                    Object = result,
                     Success = true
                 };
             }

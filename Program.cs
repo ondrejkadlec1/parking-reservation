@@ -1,6 +1,5 @@
 using System.Reflection;
 using System.Text.Json.Serialization;
-using System.Text.Json;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -68,10 +67,13 @@ builder.Services.AddAuthorization(options =>
         policy.Requirements.Add(new OwnershipRequirement()));
 });
 
+
 builder.Services.AddScoped<IAuthorizationHandler, OwnershipHandler>();
 builder.Services.AddScoped<IAuthorizationHandler, OwnerOrAdminHandler>();
 builder.Services.AddScoped<IClaimsTransformation, RoleClaimTransformer>();
 
+builder.Services.AddSingleton<GraphClientHelper>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IReservationWriteService, ReservationsWriteService>();
 builder.Services.AddScoped<IReservationReadService, ReservationsReadService>();
 

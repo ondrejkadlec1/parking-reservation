@@ -8,7 +8,7 @@ namespace ParkingReservation.Dtos.Reservations
         public DateTime BeginsAt { get; set; }
         public DateTime EndsAt { get; set; }
         public DateTime CreatedAt { get; set; }
-        public string UserId { get; set; } = null!;
+        public string User { get; set; } = null!;
         public string State { get; set; } = null!;
         public int SpaceNumber { get; set; }
         public bool IsActive { get; set; }

@@ -50,9 +50,10 @@ DROP TABLE IF EXISTS public.admins;
 
 CREATE TABLE IF NOT EXISTS public.admins
 (
-    id uuid NOT NULL,
+    id varchar(64) NOT NULL,
     added_at timestamp(2) with time zone NOT NULL DEFAULT NOW(),
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+	UNIQUE (id)
 );
 
 

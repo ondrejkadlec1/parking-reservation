@@ -14,13 +14,4 @@
         public Errors? ErrorCode { get; set; }
         public string? Message { get; set; }
     }
-
-    public enum Errors
-    {
-        Success,
-        NotFound,
-        Unauthorized,
-        InvalidState,
-        Conflict
-    }
 }

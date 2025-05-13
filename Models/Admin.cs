@@ -5,7 +5,7 @@ namespace ParkingReservation.Models;
 
 public partial class Admin
 {
-    public Guid Id { get; set; }
+    public required string Id { get; set; }
 
     public DateTime AddedAt { get; set; }
 }

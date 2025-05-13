@@ -4,6 +4,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Web;
 using ParkingReservation.Data;
 using ParkingReservation.Dtos.Spaces;
 using ParkingReservation.Models;
@@ -79,7 +80,7 @@ namespace ParkingReservation.Controllers
         public async Task<ActionResult<IEnumerable<SpaceDto>>> Post([FromBody] CreateSpacesDto dto)
         {
             var result = new Collection<Space>();
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = User.GetObjectId();
             for (var i = 0; i < dto.Count; i++)
             {
                 var space = new Space { CreatedBy =  userId };

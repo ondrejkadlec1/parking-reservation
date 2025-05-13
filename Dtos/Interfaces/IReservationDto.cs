@@ -7,5 +7,6 @@ namespace ParkingReservation.Dtos.Interfaces
     [JsonDerivedType(typeof(BlockingDto), typeDiscriminator: "blocking")]
     public interface IReservationDto
     {
+        public string User { get; set; }
     }
 }

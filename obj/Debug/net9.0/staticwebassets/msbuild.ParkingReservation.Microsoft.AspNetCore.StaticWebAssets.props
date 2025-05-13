@@ -12,8 +12,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>9r5oznopvp</Fingerprint>
-      <Integrity>2014WqVbmtzOD4yOStcFE+tOxHqtbVl8L3RKzeFoPFQ=</Integrity>
+      <Fingerprint>sox1yrz743</Fingerprint>
+      <Integrity>zP56Kt2f+UAbV76MNRsjMuEWDHDsaWbu6gEw4vraT+E=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\demo\admin.html'))</OriginalItemSpec>
@@ -30,8 +30,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>89arrk6d5j</Fingerprint>
-      <Integrity>VCjfcmMDCPmd0fvdSqnqnwpshBlYFk1cxp+MGgYWmAE=</Integrity>
+      <Fingerprint>becbub31p6</Fingerprint>
+      <Integrity>g226Pgpi2St2mN9nDThBJMWi91YYy5ZoY8+LorUr1ZY=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\demo\index.html'))</OriginalItemSpec>
@@ -48,8 +48,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>gijmj57qw0</Fingerprint>
-      <Integrity>SCPYore+H4VTQyvD9gKL5ZNlNfTJup+zmHfiMv97nfo=</Integrity>
+      <Fingerprint>l8gea7yrk1</Fingerprint>
+      <Integrity>SxCyjxutT6+wpKmn/DcM2pu1KFirgxITbugUqpvSZPQ=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\demo\scripts\admin.js'))</OriginalItemSpec>
@@ -72,24 +72,6 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\demo\scripts\auth.js'))</OriginalItemSpec>
     </StaticWebAsset>
-    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\demo\scripts\jQuery.js'))">
-      <SourceType>Package</SourceType>
-      <SourceId>ParkingReservation</SourceId>
-      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
-      <BasePath>_content/ParkingReservation</BasePath>
-      <RelativePath>demo/scripts/jQuery.js</RelativePath>
-      <AssetKind>All</AssetKind>
-      <AssetMode>All</AssetMode>
-      <AssetRole>Primary</AssetRole>
-      <RelatedAsset></RelatedAsset>
-      <AssetTraitName></AssetTraitName>
-      <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>sa0jznidgl</Fingerprint>
-      <Integrity>RKdfK3eKGKAGOeagVtyOm0IS/w2MwDD0k4Qyx8Vi03w=</Integrity>
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\demo\scripts\jQuery.js'))</OriginalItemSpec>
-    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\demo\scripts\user.js'))">
       <SourceType>Package</SourceType>
       <SourceId>ParkingReservation</SourceId>
@@ -102,8 +84,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>djmda3di2d</Fingerprint>
-      <Integrity>p8YL7PzXEluopNvcypqhfZGrBW7cK7jBu4Lj5bsY6x0=</Integrity>
+      <Fingerprint>43hrvk36il</Fingerprint>
+      <Integrity>QI7LlN63xeg7LOBb1cQQgLkfXdGTI9IcwG72mG1/Yic=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\demo\scripts\user.js'))</OriginalItemSpec>

@@ -17,10 +17,6 @@
       "PackagePath": "staticwebassets\\demo\\scripts\\auth.js"
     },
     {
-      "Id": "C:\\Users\\Ondra\\source\\repos\\ParkingReservation\\wwwroot\\demo\\scripts\\jQuery.js",
-      "PackagePath": "staticwebassets\\demo\\scripts\\jQuery.js"
-    },
-    {
       "Id": "C:\\Users\\Ondra\\source\\repos\\ParkingReservation\\wwwroot\\demo\\scripts\\user.js",
       "PackagePath": "staticwebassets\\demo\\scripts\\user.js"
     },

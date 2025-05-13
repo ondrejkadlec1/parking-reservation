@@ -11,11 +11,10 @@
 using System;
 using System.Reflection;
 
-[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("78fb490f-a3c6-4351-a5da-f93a61cdfbe2")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("ParkingReservation")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3112734f8f14646198f6981e07df02fbed42578e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c3d6c47b60bc36a4f77da271671af8c3eab9aa59")]
 [assembly: System.Reflection.AssemblyProductAttribute("ParkingReservation")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ParkingReservation")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

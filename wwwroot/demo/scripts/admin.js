@@ -78,8 +78,8 @@ function getSpaces() {
         success: function (response) {
             displaySpaces(response)
         },
-        error: function (jqXHR) {
-            alert(jqXHR.responseText)
+        error: function (jqXHR, textStatus) {
+            console.error(textStatus, jqXHR);
         }
     });
 }
@@ -98,7 +98,7 @@ function getRequests() {
                 <td>${row.endsAt}</td>
                 <td>${row.spaceNumber}</td>
                 <td>${row.createdAt}</td>
-                <td>${row.userId}</td>
+                <td>${row.user}</td>
                 <td><button class="confirm-button" data-id=${row.id}>Potvrdit</button></td>
                 <td><button class="cancel-button" data-id=${row.id}>Zrušit</button></td>
                 </tr>`);
@@ -144,6 +144,7 @@ function getSpaceDetail(id) {
                                 <th>Číslo rezervace/blokace</th>
                                 <th>Od</th>
                                 <th>Do</th>
+                                <th>Uživatel</th>
                                 <th></th>
                             </tr>
                         </table>
@@ -156,6 +157,7 @@ function getSpaceDetail(id) {
                     <td>${row.id}</td>
                     <td>${row.beginsAt}</td>
                     <td>${row.endsAt}</td>
+                    <td>${row.user}</td>
 
                 </tr>`);
                 if (row.$type == 'normal') {
