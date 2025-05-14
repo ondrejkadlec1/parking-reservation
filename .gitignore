@@ -1,3 +1,4 @@
 /.vs
 /token.cmd
 /db/scaffold.cmd
+/bin
