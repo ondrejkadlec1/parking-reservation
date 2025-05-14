@@ -1,18 +1,25 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Azure;
 using Microsoft.Identity.Web;
 using ParkingReservation.Data;
 
 namespace ParkingReservation.Services
 {
-    public class RoleClaimTransformer(AppDbContext context) : IClaimsTransformation
+    public class RoleClaimTransformer : IClaimsTransformation
     {
-        AppDbContext _context = context;
+        private readonly AppDbContext _context;
+        public RoleClaimTransformer(AppDbContext context)
+        {
+            _context = context;
+        }
         public async Task<ClaimsPrincipal> TransformAsync(ClaimsPrincipal principal)
         {
-            var identity = (ClaimsIdentity)principal.Identity;
+            if (principal.Identity == null)
+            {
+                return principal;
+            }
+            var identity = (ClaimsIdentity)principal.Identity!;
             var id = principal.GetObjectId();
             if (await _context.Admins.Where(p => p.Id == id).AnyAsync())
             {

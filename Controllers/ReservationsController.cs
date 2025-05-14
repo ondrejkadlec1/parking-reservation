@@ -1,9 +1,9 @@
-﻿using ParkingReservation.Services.Results;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ParkingReservation.Dtos.Reservations;
 using ParkingReservation.Dtos.Interfaces;
+using ParkingReservation.Dtos.Reservations;
 using ParkingReservation.Services.Interfaces;
+using ParkingReservation.Services.Results;
 
 namespace ParkingReservation.Controllers
 {
@@ -12,10 +12,16 @@ namespace ParkingReservation.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class ReservationsController(IReservationReadService readService, IReservationWriteService writeService) : ControllerBase
+    public class ReservationsController : ControllerBase
     {
-        IReservationReadService _readService = readService;
-        IReservationWriteService _writeService = writeService;
+        private readonly IReservationReadService _readService;
+        private readonly IReservationWriteService _writeService;
+
+        public ReservationsController(IReservationReadService readService, IReservationWriteService writeService)
+        {
+            _readService = readService;
+            _writeService = writeService;
+        }
 
         /// <summary>
         /// Vrátí všechny rezervace s nerozhodutým stavem.
@@ -77,7 +83,7 @@ namespace ParkingReservation.Controllers
                     return BadRequest($"Všechna místo jsou již rezervována.");
                 }
             }
-            return Created("api/Reservations/my", call.Object); 
+            return Created("api/Reservations/my", call.Object);
         }
 
         /// <summary>

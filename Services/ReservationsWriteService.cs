@@ -1,21 +1,31 @@
 ﻿using System.Security.Claims;
 using AutoMapper;
-using ParkingReservation.Services.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Web;
 using ParkingReservation.Data;
 using ParkingReservation.Dtos.Reservations;
 using ParkingReservation.Models;
 using ParkingReservation.Services.Interfaces;
-using Microsoft.Identity.Web;
+using ParkingReservation.Services.Results;
 
 namespace ParkingReservation.Services
 {
-    public class ReservationsWriteService(AppDbContext context, IMapper mapper, IAuthorizationService authorizationService): IReservationWriteService
+    public class ReservationsWriteService : IReservationWriteService
     {
-        IAuthorizationService _authorizationService = authorizationService;
-        IMapper _mapper = mapper;
-        AppDbContext _context = context;
+        private readonly IAuthorizationService _authorizationService;
+        private readonly IMapper _mapper;
+        private readonly AppDbContext _context;
+
+        public ReservationsWriteService(
+            IAuthorizationService authorizationService,
+            IMapper mapper,
+            AppDbContext context)
+        {
+            _authorizationService = authorizationService;
+            _mapper = mapper;
+            _context = context;
+        }
         public async Task<ServiceCallResult> CancelReservation(Guid id, ClaimsPrincipal user)
         {
             var reservation = _context.Reservations.FirstOrDefault(p => p.Id == id);
@@ -52,8 +62,8 @@ namespace ParkingReservation.Services
 
         public async Task<ServiceCallResult> ConfirmRequest(Guid id)
         {
-            await using (var transaction = await context.Database.BeginTransactionAsync()) 
-            { 
+            await using (var transaction = await _context.Database.BeginTransactionAsync())
+            {
                 var request = await _context.Reservations.FirstOrDefaultAsync(p => p.Id == id);
                 if (request == null)
                 {
@@ -61,15 +71,17 @@ namespace ParkingReservation.Services
                 }
                 if (request.StateId == 2)
                 {
-                    return new ServiceCallResult { 
+                    return new ServiceCallResult
+                    {
                         ErrorCode = Errors.InvalidState,
                         Message = $"Rezervace {id} už je potvrzena."
                     };
                 }
                 if (request.BeginsAt < DateTime.UtcNow || request.StateId != 1)
                 {
-                    return new ServiceCallResult { 
-                        ErrorCode = Errors.InvalidState, 
+                    return new ServiceCallResult
+                    {
+                        ErrorCode = Errors.InvalidState,
                         Message = $"Rezervaci {id} nelze potvrdit."
                     };
                 }
@@ -84,9 +96,9 @@ namespace ParkingReservation.Services
 
         public async Task<ServiceCallResult<ReservationDto>> Create(ReservationRequestDto dto, ClaimsPrincipal user)
         {
-            await using (var transaction = await context.Database.BeginTransactionAsync())
+            await using (var transaction = await _context.Database.BeginTransactionAsync())
             {
-                int? available= await _context.Spaces
+                int? available = await _context.Spaces
                     .Where(p => !p.Reservations
                         .Where(r => r.BeginsAt < dto.EndsAt && r.EndsAt > dto.BeginsAt && r.StateId != 3).Any()
                 )
@@ -101,7 +113,7 @@ namespace ParkingReservation.Services
                 reservation.SpaceNumber = (int)available;
                 reservation.TypeId = 1;
                 reservation.StateId = 1;
-                reservation.UserId = user.GetObjectId();
+                reservation.UserId = user.GetObjectId()!;
                 _context.Add(reservation);
                 await _context.SaveChangesAsync();
                 await _context.Entry(reservation).Reference(p => p.State).LoadAsync();
@@ -109,7 +121,7 @@ namespace ParkingReservation.Services
                 await transaction.CommitAsync();
 
                 var result = _mapper.Map<ReservationDto>(reservation);
-                result.User = user.GetDisplayName();
+                result.User = user.GetDisplayName() ?? user.GetObjectId()!;
                 return new ServiceCallResult<ReservationDto>
                 {
                     Object = result,
@@ -121,7 +133,7 @@ namespace ParkingReservation.Services
 
         public async Task<ServiceCallResult<BlockingDto>> CreateBlocking(CreateBlockingDto dto, ClaimsPrincipal user)
         {
-            await using (var transaction = await context.Database.BeginTransactionAsync())
+            await using (var transaction = await _context.Database.BeginTransactionAsync())
             {
                 var space = await _context.Spaces.FirstOrDefaultAsync(p => p.SpaceNumber == dto.SpaceNumber);
                 if (space == null)
@@ -145,7 +157,7 @@ namespace ParkingReservation.Services
                 var blocking = _mapper.Map<Reservation>(dto);
                 blocking.TypeId = 2;
                 blocking.StateId = 2;
-                blocking.UserId = user.GetObjectId();
+                blocking.UserId = user.GetObjectId()!;
                 _context.Add(blocking);
 
                 await _context.SaveChangesAsync();
@@ -154,7 +166,7 @@ namespace ParkingReservation.Services
                 await transaction.CommitAsync();
 
                 var result = _mapper.Map<BlockingDto>(blocking);
-                result.User = user.GetDisplayName();
+                result.User = user.GetDisplayName() ?? user.GetObjectId()!;
                 return new ServiceCallResult<BlockingDto>
                 {
                     Object = result,

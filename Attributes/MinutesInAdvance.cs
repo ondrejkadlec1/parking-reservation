@@ -1,12 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Microsoft.OData.ModelBuilder;
 
 namespace ParkingReservation.Attributes
 {
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
     public class MinutesInAdvance : ValidationAttribute
     {
-        TimeSpan _inAdvance;
+        private TimeSpan _inAdvance { get; }
         public MinutesInAdvance(int minutes)
         {
             _inAdvance = TimeSpan.FromMinutes(minutes);

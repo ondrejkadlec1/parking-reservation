@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ParkingReservation.Models;
+﻿namespace ParkingReservation.Models;
 
 public partial class State
 {

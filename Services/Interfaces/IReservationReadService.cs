@@ -1,8 +1,7 @@
-﻿using ParkingReservation.Services.Results;
-using ParkingReservation.Models;
-using ParkingReservation.Dtos.Reservations;
+﻿using System.Security.Claims;
 using ParkingReservation.Dtos.Interfaces;
-using System.Security.Claims;
+using ParkingReservation.Models;
+using ParkingReservation.Services.Results;
 
 namespace ParkingReservation.Services.Interfaces
 {

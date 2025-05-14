@@ -1,14 +1,18 @@
-﻿using ParkingReservation.Services.Interfaces;
-using Microsoft.Graph;
+﻿using Microsoft.Graph;
 using Microsoft.Graph.Models;
+using ParkingReservation.Services.Interfaces;
 using ParkingReservation.Services.Results;
 
 namespace ParkingReservation.Services
 {
-    public class UserService(GraphClientHelper helper) : IUserService
+    public class UserService : IUserService
     {
-        GraphServiceClient _graphClient = helper.Client;
-        
+        private readonly GraphServiceClient _graphClient;
+        public UserService(GraphServiceClient graphClient)
+        {
+            _graphClient = graphClient;
+        }
+
         public async Task<ServiceCallResult<Dictionary<string, string>>> GetUsernames(ICollection<string> ids)
         {
             var batchRequestContent = new BatchRequestContentCollection(_graphClient);
@@ -21,16 +25,18 @@ namespace ParkingReservation.Services
                 var userRequestId = await batchRequestContent.AddBatchRequestStepAsync(userRequest);
                 userIdToRequestId.Add(id, userRequestId);
             }
+
             var returnedResponse = await _graphClient.Batch.PostAsync(batchRequestContent);
-            
+
             var userIdToUsername = new Dictionary<string, string>();
-            foreach(KeyValuePair<string, string> pair in userIdToRequestId)
+            foreach (KeyValuePair<string, string> pair in userIdToRequestId)
             {
                 var user = await returnedResponse.GetResponseByIdAsync<User>(pair.Value);
-                var username = user.DisplayName != null ? user.DisplayName : "unknown"; 
+                var username = user.DisplayName ?? pair.Key;
                 userIdToUsername.Add(pair.Key, username);
             }
-            return new ServiceCallResult<Dictionary<string, string>> { 
+            return new ServiceCallResult<Dictionary<string, string>>
+            {
                 Object = userIdToUsername,
                 Success = true
             };

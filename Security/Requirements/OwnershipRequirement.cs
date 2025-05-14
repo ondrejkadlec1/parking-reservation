@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 
 namespace ParkingReservation.Security.Requirements
 {
-    public class OwnershipRequirement : IAuthorizationRequirement 
-    { 
+    public class OwnershipRequirement : IAuthorizationRequirement
+    {
     }
 }

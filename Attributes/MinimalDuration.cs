@@ -1,14 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using ParkingReservation.Dtos.Interfaces;
-using ParkingReservation.Dtos.Reservations;
 
 namespace ParkingReservation.Attributes
 {
     [AttributeUsage(AttributeTargets.Interface, AllowMultiple = false)]
-    public class MinimalDuration: ValidationAttribute
+    public class MinimalDuration : ValidationAttribute
     {
-        TimeSpan _minimalDuration;
-        public MinimalDuration(int minutes) 
+        private TimeSpan _minimalDuration { get; set; }
+        public MinimalDuration(int minutes)
         {
             _minimalDuration = TimeSpan.FromMinutes(minutes);
         }
@@ -24,7 +23,7 @@ namespace ParkingReservation.Attributes
                 return new ValidationResult($"Rezervace musí trvat {_minimalDuration.Minutes} minut předem.");
             }
             return new ValidationResult("Wrong type.");
-            
+
         }
     }
 }

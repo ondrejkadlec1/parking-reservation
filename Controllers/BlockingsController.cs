@@ -1,19 +1,23 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ParkingReservation.Dtos.Reservations;
 using ParkingReservation.Services.Interfaces;
 using ParkingReservation.Services.Results;
-using ParkingReservation.Dtos.Reservations;
-using ParkingReservation.Dtos.Interfaces;
 
 namespace ParkingReservation.Controllers
 {
     [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
-    public class BlockingsController(IReservationWriteService writeService, IReservationReadService readService) : ControllerBase
+    public class BlockingsController : ControllerBase
     {
-        IReservationWriteService _writeService = writeService;
-        IReservationReadService _readService = readService;
+        private readonly IReservationWriteService _writeService;
+        private readonly IReservationReadService _readService;
+        public BlockingsController(IReservationWriteService writeService, IReservationReadService readService)
+        {
+            _writeService = writeService;
+            _readService = readService;
+        }
 
         /// <summary>
         /// Vytvoří novou blokaci, pokud už místo není zablokované a zruší konfliktní rezervace.
@@ -39,7 +43,7 @@ namespace ParkingReservation.Controllers
                     return BadRequest($"Místo {dto.SpaceNumber} již je blokováno.");
                 }
             }
-            return Ok(call.Object); 
+            return Ok(call.Object);
         }
 
         [HttpGet("my")]

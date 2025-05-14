@@ -2,7 +2,7 @@
 
 namespace ParkingReservation.Dtos.Reservations
 {
-    public record BlockingDto: IReservationDto
+    public record BlockingDto : IReservationDto
     {
         public Guid Id { get; set; }
         public DateTime BeginsAt { get; set; }

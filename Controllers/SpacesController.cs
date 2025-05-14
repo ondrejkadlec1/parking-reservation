@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Security.Claims;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,10 +15,15 @@ namespace ParkingReservation.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class SpacesController(AppDbContext context, IMapper mapper) : ControllerBase
+    public class SpacesController : ControllerBase
     {
-        AppDbContext _context = context;
-        IMapper _mapper = mapper;
+        private readonly AppDbContext _context;
+        private readonly IMapper _mapper;
+        public SpacesController(AppDbContext context, IMapper mapper)
+        {
+            _context = context;
+            _mapper = mapper;
+        }
 
         /// <summary>
         /// Vrátí všechna parkovací místa.
@@ -40,11 +44,11 @@ namespace ParkingReservation.Controllers
         /// <param name="from">Začátek potenciální rezervace.</param>
         /// <param name="till">Konec potenciální rezervace.</param>
         /// <returns>Počet míst a obscazených míst.</returns>
-        [HttpGet("avialible")]
+        [HttpGet("available")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         public async Task<ActionResult<Availability>> GetAvailability(
-            DateTime from, 
+            DateTime from,
             DateTime till)
         {
             if (from > till || from < DateTime.UtcNow)
@@ -58,13 +62,13 @@ namespace ParkingReservation.Controllers
                 .Where(p => p.Reservations
                     .Where(r => r.StateId != 3 && r.BeginsAt < till && r.EndsAt > from).Any()
                 ).CountAsync();
-            bool is_avialible = total > occupied;
+            bool is_available = total > occupied;
 
             var result = new Availability
             {
                 OccupiedCount = occupied,
                 TotalCount = total,
-                Avialible = is_avialible
+                Available = is_available
             };
             return Ok(result);
         }
@@ -80,10 +84,10 @@ namespace ParkingReservation.Controllers
         public async Task<ActionResult<IEnumerable<SpaceDto>>> Post([FromBody] CreateSpacesDto dto)
         {
             var result = new Collection<Space>();
-            var userId = User.GetObjectId();
+            var userId = User.GetObjectId()!;
             for (var i = 0; i < dto.Count; i++)
             {
-                var space = new Space { CreatedBy =  userId };
+                var space = new Space { CreatedBy = userId };
                 result.Add(space);
                 _context.Add(space);
             }

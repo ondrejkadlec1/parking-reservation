@@ -19,14 +19,14 @@
 
 function getSpaces() {
     $.ajax({
-        url: `https://localhost:7036/api/Spaces/avialible?from=${$('#begins-at').val()}Z&till=${$('#ends-at').val()}Z`,
+        url: `https://localhost:7036/api/Spaces/available?from=${$('#begins-at').val()}Z&till=${$('#ends-at').val()}Z`,
         method: 'GET',
         dataType: 'json',
         success: function (response) {
-            $('#avialible').empty();
-            $('#avialible').append(`<span>Obsazeno ${response.occupiedCount}/${response.totalCount}</span>`);
-            if (response.avialible) {
-                $('#avialible').append(`<button id="res-button">Rezervovat</span>`);
+            $('#available').empty();
+            $('#available').append(`<span>Obsazeno ${response.occupiedCount}/${response.totalCount}</span>`);
+            if (response.available) {
+                $('#available').append(`<button id="res-button">Rezervovat</span>`);
             }
         },
         error: function (jqXHR) {

@@ -1,15 +1,17 @@
-﻿using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using ParkingReservation.Models;
 using ParkingReservation.Security.Requirements;
 using ParkingReservation.Services.Interfaces;
 
 namespace ParkingReservation.Security.Handlers
 {
-    public class OwnershipHandler(IReservationReadService service): AuthorizationHandler<OwnershipRequirement, Reservation>
+    public class OwnershipHandler : AuthorizationHandler<OwnershipRequirement, Reservation>
     {
-        IReservationReadService _service = service;
+        private readonly IReservationReadService _service;
+        public OwnershipHandler(IReservationReadService service)
+        {
+            _service = service;
+        }
 
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, OwnershipRequirement requirement, Reservation resource)
         {

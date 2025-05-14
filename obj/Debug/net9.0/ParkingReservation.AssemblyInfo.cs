@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ParkingReservation")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a567b2d28ef5a5c0150b8b186450d6848b1bb1f8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b658ee31bf550b0f43dc6f4d732e62921f7ab14a")]
 [assembly: System.Reflection.AssemblyProductAttribute("ParkingReservation")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ParkingReservation")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

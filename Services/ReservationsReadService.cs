@@ -1,23 +1,32 @@
 ﻿using System.Security.Claims;
 using AutoMapper;
-using ParkingReservation.Services.Results;
-using ParkingReservation.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using ParkingReservation.Data;
-using ParkingReservation.Dtos.Reservations;
-using ParkingReservation.Dtos.Interfaces;
-using ParkingReservation.Models;
 using Microsoft.Identity.Web;
+using ParkingReservation.Data;
+using ParkingReservation.Dtos.Interfaces;
+using ParkingReservation.Dtos.Reservations;
+using ParkingReservation.Models;
+using ParkingReservation.Services.Interfaces;
+using ParkingReservation.Services.Results;
 
 namespace ParkingReservation.Services
 {
-    public class ReservationsReadService(AppDbContext context, IMapper mapper, IUserService userService): IReservationReadService
+    public class ReservationsReadService : IReservationReadService
     {
-        IMapper _mapper = mapper;
-        AppDbContext _context = context;
-        IUserService _userService = userService;
-        
-        internal IReservationDto Discriminate(Reservation input)
+        private readonly IMapper _mapper;
+        private readonly AppDbContext _context;
+        private readonly IUserService _userService;
+        public ReservationsReadService(
+            IMapper mapper,
+            AppDbContext context,
+            IUserService userService)
+        {
+            _mapper = mapper;
+            _context = context;
+            _userService = userService;
+        }
+
+        private IReservationDto Discriminate(Reservation input)
         {
             if (input.TypeId == 2)
             {
@@ -26,15 +35,15 @@ namespace ParkingReservation.Services
             return _mapper.Map<ReservationDto>(input);
         }
 
-        internal async Task<ICollection<IReservationDto>> MapWithUsernames(ICollection<Reservation> reservations)
+        private async Task<ICollection<IReservationDto>> MapWithUsernames(ICollection<Reservation> reservations)
         {
             var userIds = reservations.Select(p => p.UserId).Distinct().ToList();
             var call = await _userService.GetUsernames(userIds);
-            var usernames = call.Object;
+            var usernames = call.Object!;
 
             var mapped = new List<IReservationDto>();
-            foreach (var reservation in reservations) 
-            { 
+            foreach (var reservation in reservations)
+            {
                 var dto = Discriminate(reservation);
                 dto.User = usernames[reservation.UserId];
                 mapped.Add(dto);
@@ -58,7 +67,7 @@ namespace ParkingReservation.Services
             var output = await MapWithUsernames(result);
             return new ServiceCallResult<ICollection<IReservationDto>>
             {
-                Object = (ICollection<IReservationDto>)output,
+                Object = output,
                 Success = true
             };
         }
@@ -76,7 +85,7 @@ namespace ParkingReservation.Services
             var output = await MapWithUsernames(result);
             return new ServiceCallResult<ICollection<IReservationDto>>
             {
-                Object = (ICollection<IReservationDto>)output,
+                Object = output,
                 Success = true
             };
         }
@@ -85,7 +94,7 @@ namespace ParkingReservation.Services
         {
             var userId = user.GetObjectId();
             var result = await _context.Reservations
-                .Where(p => p.UserId == userId && 
+                .Where(p => p.UserId == userId &&
                     p.TypeId == 2 &&
                     p.StateId == 2 &&
                     p.EndsAt >= DateTime.UtcNow)
@@ -95,7 +104,7 @@ namespace ParkingReservation.Services
             var output = await MapWithUsernames(result);
             return new ServiceCallResult<ICollection<IReservationDto>>
             {
-                Object = (ICollection<IReservationDto>)output,
+                Object = output,
                 Success = true
             };
         }
@@ -110,14 +119,15 @@ namespace ParkingReservation.Services
             var output = await MapWithUsernames(result);
             return new ServiceCallResult<ICollection<IReservationDto>>
             {
-                Object = (ICollection<IReservationDto>)output,
+                Object = output,
                 Success = true
             };
         }
 
         public bool OwnsReservation(ClaimsPrincipal user, Reservation reservation)
         {
-            return user.GetObjectId() == reservation.UserId;
+            var userId = user.GetObjectId();
+            return userId != null && userId == reservation.UserId;
         }
     }
 }
