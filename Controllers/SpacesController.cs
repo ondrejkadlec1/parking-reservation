@@ -15,15 +15,8 @@ namespace ParkingReservation.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class SpacesController : ControllerBase
+    public class SpacesController(AppDbContext context, IMapper mapper) : ControllerBase
     {
-        private readonly AppDbContext _context;
-        private readonly IMapper _mapper;
-        public SpacesController(AppDbContext context, IMapper mapper)
-        {
-            _context = context;
-            _mapper = mapper;
-        }
 
         /// <summary>
         /// Vrátí všechna parkovací místa.
@@ -32,9 +25,9 @@ namespace ParkingReservation.Controllers
         [Authorize(Roles = "Admin")]
         [HttpGet]
         [ProducesResponseType(200)]
-        public async Task<ActionResult<ICollection<SpaceDto>>> Get()
+        public async Task<ActionResult<ICollection<SpaceResponseDto>>> Get()
         {
-            var result = await _context.Spaces.Select(p => _mapper.Map<SpaceDto>(p)).ToListAsync();
+            var result = await context.Spaces.Select(p => mapper.Map<SpaceResponseDto>(p)).ToListAsync();
             return Ok(result);
         }
 
@@ -47,7 +40,7 @@ namespace ParkingReservation.Controllers
         [HttpGet("available")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
-        public async Task<ActionResult<Availability>> GetAvailability(
+        public async Task<ActionResult<AvailabilityDto>> GetAvailability(
             DateTime from,
             DateTime till)
         {
@@ -56,15 +49,15 @@ namespace ParkingReservation.Controllers
                 return BadRequest("Zadán neplatný vstup.");
             }
 
-            int total = await _context.Spaces.CountAsync();
-            int occupied = await _context.Spaces
+            int total = await context.Spaces.CountAsync();
+            int occupied = await context.Spaces
                 .Include(p => p.Reservations)
                 .Where(p => p.Reservations
                     .Where(r => r.StateId != 3 && r.BeginsAt < till && r.EndsAt > from).Any()
                 ).CountAsync();
             bool is_available = total > occupied;
 
-            var result = new Availability
+            var result = new AvailabilityDto
             {
                 OccupiedCount = occupied,
                 TotalCount = total,
@@ -80,21 +73,21 @@ namespace ParkingReservation.Controllers
         /// <returns>Reprezentace nově vytvořených míst.</returns>
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        [ProducesResponseType(200)]
-        public async Task<ActionResult<IEnumerable<SpaceDto>>> Post([FromBody] CreateSpacesDto dto)
+        [ProducesResponseType(201)]
+        public async Task<ActionResult<IEnumerable<SpaceResponseDto>>> Post([FromBody] SpacesRequestDto dto)
         {
             var result = new Collection<Space>();
             var userId = User.GetObjectId()!;
             for (var i = 0; i < dto.Count; i++)
             {
-                var space = new Space { CreatedBy = userId };
+                var space = new Space { CreatedBy = Guid.Parse(userId) };
                 result.Add(space);
-                _context.Add(space);
+                context.Add(space);
             }
-            await _context.SaveChangesAsync();
-            var output = result.Select(_mapper.Map<SpaceDto>);
+            await context.SaveChangesAsync();
+            var output = result.Select(mapper.Map<SpaceResponseDto>);
 
-            return Ok(output);
+            return Created("api/Spaces", output);
         }
 
         /// <summary>
@@ -107,11 +100,11 @@ namespace ParkingReservation.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult> Delete(int spaceNumber)
         {
-            if (await _context.Spaces.Where(p => p.SpaceNumber == spaceNumber).FirstOrDefaultAsync() == null)
+            if (await context.Spaces.Where(p => p.SpaceNumber == spaceNumber).FirstOrDefaultAsync() == null)
             {
                 return NotFound($"Parkovací místo s číslem {spaceNumber} neexistuje.");
             }
-            await _context.Spaces.Where(p => p.SpaceNumber == spaceNumber).ExecuteDeleteAsync();
+            await context.Spaces.Where(p => p.SpaceNumber == spaceNumber).ExecuteDeleteAsync();
             return NoContent();
         }
     }

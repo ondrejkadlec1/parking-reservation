@@ -3,7 +3,7 @@ using ParkingReservation.Dtos.Interfaces;
 
 namespace ParkingReservation.Dtos.Reservations
 {
-    public record CreateBlockingDto : ITimeInterval
+    public record BlockingRequestDto : ITimeInterval
     {
         public DateTime BeginsAt { get; set; }
         [MinutesInAdvance(0)]

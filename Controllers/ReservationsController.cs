@@ -2,8 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ParkingReservation.Dtos.Interfaces;
 using ParkingReservation.Dtos.Reservations;
-using ParkingReservation.Services.Interfaces;
-using ParkingReservation.Services.Results;
+using ParkingReservation.Services.ReservationService;
 
 namespace ParkingReservation.Controllers
 {
@@ -12,16 +11,8 @@ namespace ParkingReservation.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class ReservationsController : ControllerBase
+    public class ReservationsController(IReservationReadService readService, IReservationWriteService writeService) : ControllerBase
     {
-        private readonly IReservationReadService _readService;
-        private readonly IReservationWriteService _writeService;
-
-        public ReservationsController(IReservationReadService readService, IReservationWriteService writeService)
-        {
-            _readService = readService;
-            _writeService = writeService;
-        }
 
         /// <summary>
         /// Vrátí všechny rezervace s nerozhodutým stavem.
@@ -30,10 +21,9 @@ namespace ParkingReservation.Controllers
         [Authorize(Roles = "Admin")]
         [HttpGet("requests")]
         [ProducesResponseType(200)]
-        public async Task<ActionResult<ICollection<ReservationDto>>> GetRequests()
+        public async Task<ActionResult<ICollection<ReservationResponseDto>>> GetRequests()
         {
-            var call = await _readService.GetFutureRequests();
-            return Ok(call.Object);
+            return Ok(await readService.GetFutureRequests());
         }
 
         /// <summary>
@@ -42,10 +32,9 @@ namespace ParkingReservation.Controllers
         /// <returns>Reprezentace rezervací uživatele.</returns>
         [HttpGet("my")]
         [ProducesResponseType(200)]
-        public async Task<ActionResult<ICollection<ReservationDto>>> GetMy()
+        public async Task<ActionResult<ICollection<ReservationResponseDto>>> GetMy()
         {
-            var call = await _readService.GetNormalByUser(User);
-            return Ok(call.Object);
+            return Ok(await readService.GetNormalByUser(User));
         }
 
         /// <summary>
@@ -54,15 +43,9 @@ namespace ParkingReservation.Controllers
         /// <returns>Reprezentace rezervací místa.</returns>
         [HttpGet("{spaceNumber}")]
         [ProducesResponseType(200)]
-        [ProducesResponseType(400)]
         public async Task<ActionResult<ICollection<IReservationDto>>> GetBySpace(int spaceNumber)
         {
-            var call = await _readService.GetFutureBySpace(spaceNumber);
-            if (!call.Success && call.ErrorCode == Errors.NotFound)
-            {
-                return NotFound($"Místo {spaceNumber} neexistuje.");
-            }
-            return Ok(call.Object);
+            return Ok(await readService.GetFutureBySpace(spaceNumber));
         }
 
         /// <summary>
@@ -72,18 +55,10 @@ namespace ParkingReservation.Controllers
         /// <returns>Reprezentace vytvořenéhé rezervace.</returns>
         [HttpPost]
         [ProducesResponseType(201)]
-        [ProducesResponseType(400)]
-        public async Task<ActionResult<ReservationDto>> PostRequest(ReservationRequestDto request)
+        public async Task<ActionResult<ReservationResponseDto>> PostRequest(ReservationRequestDto request)
         {
-            var call = await _writeService.Create(request, User);
-            if (!call.Success)
-            {
-                if (call.ErrorCode == Errors.NotFound)
-                {
-                    return BadRequest($"Všechna místo jsou již rezervována.");
-                }
-            }
-            return Created("api/Reservations/my", call.Object);
+            var newReservation = await writeService.Create(request, User);
+            return Created("api/Reservations/my", newReservation);
         }
 
         /// <summary>
@@ -94,21 +69,9 @@ namespace ParkingReservation.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPatch("{id}")]
         [ProducesResponseType(204)]
-        [ProducesResponseType(404)]
         public async Task<ActionResult> Confirm(Guid id)
         {
-            var call = await _writeService.ConfirmRequest(id);
-            if (!call.Success)
-            {
-                if (call.ErrorCode == Errors.NotFound)
-                {
-                    return NotFound($"Rezervace {id} neexistuje.");
-                }
-                if (call.ErrorCode == Errors.InvalidState)
-                {
-                    return BadRequest(call.Message);
-                }
-            }
+            await writeService.ConfirmRequest(id);
             return NoContent();
         }
 
@@ -120,7 +83,7 @@ namespace ParkingReservation.Controllers
         [ProducesResponseType(204)]
         public async Task<ActionResult> ConfirmAll()
         {
-            await _writeService.ConfirmAllRequests();
+            await writeService.ConfirmAllRequests();
             return NoContent();
         }
 
@@ -131,22 +94,9 @@ namespace ParkingReservation.Controllers
 
         [HttpDelete("{id}")]
         [ProducesResponseType(204)]
-        [ProducesResponseType(403)]
-        [ProducesResponseType(404)]
         public async Task<ActionResult> Cancel(Guid id)
         {
-            var call = await _writeService.CancelReservation(id, User);
-            if (!call.Success)
-            {
-                if (call.ErrorCode == Errors.NotFound)
-                {
-                    return NotFound($"Rezervace {id} neexistuje.");
-                }
-                if (call.ErrorCode == Errors.Unauthorized)
-                {
-                    return Forbid();
-                }
-            }
+            await writeService.CancelReservation(id, User);
             return NoContent();
         }
     }

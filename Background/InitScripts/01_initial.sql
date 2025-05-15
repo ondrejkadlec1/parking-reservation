@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS public.reservations
     begins_at timestamp(0) with time zone NOT NULL,
     ends_at timestamp(0) with time zone NOT NULL,
     created_at timestamp(2) with time zone NOT NULL DEFAULT NOW(),
-    user_id varchar(64) NOT NULL DEFAULT 1,
+    user_id uuid NOT NULL,
     comment varchar(256),
     PRIMARY KEY (id)
 );
@@ -21,7 +21,7 @@ DROP TABLE IF EXISTS public.spaces;
 CREATE TABLE IF NOT EXISTS public.spaces
 (
     space_number serial NOT NULL,
-    created_by varchar(64) NOT NULL,
+    created_by uuid NOT NULL,
     created_at timestamp(2) with time zone NOT NULL DEFAULT NOW(),
     PRIMARY KEY (space_number)
 );
@@ -46,18 +46,22 @@ CREATE TABLE IF NOT EXISTS public.reservation_types
     PRIMARY KEY (id)
 );
 
-DROP TABLE IF EXISTS public.admins;
+DROP TABLE IF EXISTS public.users;
 
-CREATE TABLE IF NOT EXISTS public.admins
+CREATE TABLE IF NOT EXISTS public.users
 (
-    id varchar(64) NOT NULL,
+    id uuid NOT NULL,
     added_at timestamp(2) with time zone NOT NULL DEFAULT NOW(),
+    is_active bool NOT NULL DEFAULT true,
+    is_admin bool NOT NULL DEFAULT false,
+    display_name varchar(64) NOT NULL,
     PRIMARY KEY (id),
 	UNIQUE (id)
 );
 
 
 CREATE INDEX index_spn_reservations ON public.reservations (space_number);
+CREATE INDEX index_usr_reservations ON public.reservations (user_id);
 
 
 ALTER TABLE IF EXISTS public.reservations
@@ -81,6 +85,22 @@ ALTER TABLE IF EXISTS public.reservations
     REFERENCES public.spaces (space_number) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE CASCADE
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.reservations
+    ADD FOREIGN KEY (user_id)
+    REFERENCES public.users (id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE CASCADE
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.spaces
+    ADD FOREIGN KEY (created_by)
+    REFERENCES public.users (id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE RESTRICT
     NOT VALID;
 
 

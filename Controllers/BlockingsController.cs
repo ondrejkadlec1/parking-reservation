@@ -1,23 +1,15 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ParkingReservation.Dtos.Reservations;
-using ParkingReservation.Services.Interfaces;
-using ParkingReservation.Services.Results;
+using ParkingReservation.Services.ReservationService;
 
 namespace ParkingReservation.Controllers
 {
     [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
-    public class BlockingsController : ControllerBase
+    public class BlockingsController(IReservationWriteService writeService, IReservationReadService readService) : ControllerBase
     {
-        private readonly IReservationWriteService _writeService;
-        private readonly IReservationReadService _readService;
-        public BlockingsController(IReservationWriteService writeService, IReservationReadService readService)
-        {
-            _writeService = writeService;
-            _readService = readService;
-        }
 
         /// <summary>
         /// Vytvoří novou blokaci, pokud už místo není zablokované a zruší konfliktní rezervace.
@@ -26,32 +18,17 @@ namespace ParkingReservation.Controllers
         /// <returns>Reprezentace vytvořené blokace.</returns>
 
         [HttpPost]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(404)]
-        public async Task<ActionResult<BlockingDto>> Post(CreateBlockingDto dto)
+        [ProducesResponseType(201)]
+        public async Task<ActionResult<BlockingResponseDto>> Post(BlockingRequestDto dto)
         {
-            var call = await _writeService.CreateBlocking(dto, User);
-            if (!call.Success)
-            {
-                if (call.ErrorCode == Errors.NotFound)
-                {
-                    return NotFound($"Místo {dto.SpaceNumber} neexistuje.");
-                }
-                if (call.ErrorCode == Errors.Conflict)
-                {
-                    return BadRequest($"Místo {dto.SpaceNumber} již je blokováno.");
-                }
-            }
-            return Ok(call.Object);
+            return Created("api/Blockings/my", await writeService.CreateBlocking(dto, User));
         }
 
         [HttpGet("my")]
         [ProducesResponseType(200)]
-        public async Task<ActionResult<ICollection<BlockingDto>>> GetMy()
+        public async Task<ActionResult<ICollection<BlockingResponseDto>>> GetMy()
         {
-            var call = await _readService.GetFutureBlockingsByUser(User);
-            return Ok(call.Object);
+            return Ok(await readService.GetFutureBlockingsByUser(User));
         }
     }
 }

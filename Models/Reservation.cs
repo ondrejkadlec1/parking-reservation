@@ -1,4 +1,7 @@
-﻿namespace ParkingReservation.Models;
+﻿using System;
+using System.Collections.Generic;
+
+namespace ParkingReservation.Models;
 
 public partial class Reservation
 {
@@ -16,7 +19,7 @@ public partial class Reservation
 
     public DateTime CreatedAt { get; set; }
 
-    public string UserId { get; set; } = null!;
+    public Guid UserId { get; set; }
 
     public string? Comment { get; set; }
 
@@ -25,4 +28,6 @@ public partial class Reservation
     public virtual State State { get; set; } = null!;
 
     public virtual ReservationType Type { get; set; } = null!;
+
+    public virtual User User { get; set; } = null!;
 }

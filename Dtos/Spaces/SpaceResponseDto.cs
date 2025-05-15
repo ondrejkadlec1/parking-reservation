@@ -1,6 +1,6 @@
 ﻿namespace ParkingReservation.Dtos.Spaces
 {
-    public record SpaceDto
+    public record SpaceResponseDto
     {
         public int SpaceNumber { get; set; }
 

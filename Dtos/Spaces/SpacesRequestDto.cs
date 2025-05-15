@@ -2,7 +2,7 @@
 
 namespace ParkingReservation.Dtos.Spaces
 {
-    public record CreateSpacesDto
+    public record SpacesRequestDto
     {
         [Range(1, 9999)]
         public int Count { get; set; }

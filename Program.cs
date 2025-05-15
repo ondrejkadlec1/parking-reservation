@@ -3,13 +3,16 @@ using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.Identity.Web;
 using Microsoft.OpenApi.Models;
 using ParkingReservation.Data;
+using ParkingReservation.Security;
 using ParkingReservation.Security.Handlers;
 using ParkingReservation.Security.Requirements;
 using ParkingReservation.Services;
-using ParkingReservation.Services.Interfaces;
+using ParkingReservation.Services.ReservationService;
+using ParkingReservation.Services.UserService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -67,6 +70,8 @@ builder.Services.AddAuthorization(options =>
         policy.Requirements.Add(new OwnershipRequirement()));
 });
 
+builder.Services.AddExceptionHandler<AppExceptionHandler>();
+builder.Services.AddProblemDetails();
 
 builder.Services.AddScoped<IAuthorizationHandler, OwnershipHandler>();
 builder.Services.AddScoped<IAuthorizationHandler, OwnerOrAdminHandler>();
@@ -97,5 +102,6 @@ app.UseAuthorization();
 
 app.MapControllers().RequireAuthorization();
 app.UseStaticFiles();
+app.UseExceptionHandler();
 
 app.Run();

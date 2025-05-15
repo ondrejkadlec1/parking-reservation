@@ -8,7 +8,7 @@ namespace ParkingReservation.Mapping
     {
         public SpaceProfile()
         {
-            CreateMap<Space, SpaceDto>();
+            CreateMap<Space, SpaceResponseDto>();
         }
 
     }

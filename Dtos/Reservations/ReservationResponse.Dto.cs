@@ -2,13 +2,13 @@
 
 namespace ParkingReservation.Dtos.Reservations
 {
-    public record ReservationDto : IReservationDto
+    public record ReservationResponseDto : IReservationDto
     {
         public Guid Id { get; set; }
         public DateTime BeginsAt { get; set; }
         public DateTime EndsAt { get; set; }
         public DateTime CreatedAt { get; set; }
-        public string User { get; set; } = null!;
+        public string DisplayName { get; set; } = null!;
         public string State { get; set; } = null!;
         public int SpaceNumber { get; set; }
         public bool IsActive { get; set; }

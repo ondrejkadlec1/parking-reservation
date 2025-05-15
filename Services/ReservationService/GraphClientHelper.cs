@@ -1,7 +1,7 @@
 ﻿using Azure.Identity;
 using Microsoft.Graph;
 
-namespace ParkingReservation.Services
+namespace ParkingReservation.Services.ReservationService
 {
     public class GraphClientHelper
     {

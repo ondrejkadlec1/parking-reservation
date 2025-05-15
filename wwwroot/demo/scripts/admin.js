@@ -27,7 +27,7 @@
 
     $("body").on("click", ".unblock-button", function () {
         var id = $(this).attr("data-id");
-        unblock(id);
+        unblockSpace(id);
     });
 
     $("body").on("click", ".detail-button", function () {
@@ -44,6 +44,10 @@
         e.preventDefault();
         var spaceNumber = $(this).attr("data-space-number");
         blockSpace(spaceNumber);
+    });
+
+    $("body").on("click", "#synchronize-button", function () {
+        synchronizeUsers();
     });
 
     getSpaces();
@@ -98,7 +102,7 @@ function getRequests() {
                 <td>${row.endsAt}</td>
                 <td>${row.spaceNumber}</td>
                 <td>${row.createdAt}</td>
-                <td>${row.user}</td>
+                <td>${row.displayName}</td>
                 <td><button class="confirm-button" data-id=${row.id}>Potvrdit</button></td>
                 <td><button class="cancel-button" data-id=${row.id}>Zrušit</button></td>
                 </tr>`);
@@ -135,7 +139,6 @@ function getSpaceDetail(id) {
         method: 'GET',
         dataType: 'json',
         success: function (response) {
-            console.log(response);
             $(`#sp-${id}`).after(
                 `<tr class="calendar">
                     <td colspan=5>
@@ -157,7 +160,7 @@ function getSpaceDetail(id) {
                     <td>${row.id}</td>
                     <td>${row.beginsAt}</td>
                     <td>${row.endsAt}</td>
-                    <td>${row.user}</td>
+                    <td>${row.displayName}</td>
 
                 </tr>`);
                 if (row.$type == 'normal') {
@@ -177,24 +180,6 @@ function getSpaceDetail(id) {
     });
 }
 
-function blockSpaceDialog(spaceNumber) {
-    $('.blocking-dialog').remove();
-    $(`#sp-${spaceNumber}`).after(
-        `<tr class="blocking-dialog">
-            <td>
-                <form class="block-form" data-space-number=${spaceNumber}>
-                    <label for="begins-at">Začátek:</label>
-                    <input type="datetime-local" id="begins-at" name="begins-at" step"1800">
-                    <label for="ends-at">Konec:</label>
-                    <input type="datetime-local" id="ends-at" name="ends-at" step"1800">
-                    <label for="comment">Komentář:</label>
-                    <input type="text" id="comment" name="comment">
-                    <input type="submit">
-                </form>
-            <td>
-        </tr>`
-    )
-}
 
 function deleteSpace(id) {
     $.ajax({
@@ -253,7 +238,7 @@ function confirmAll() {
     });
 }
 
-function unblock(id) {
+function unblockSpace(id) {
     $.ajax({
         type: "DELETE",
         url: `https://localhost:7036/api/Reservations/${id}`,
@@ -268,7 +253,7 @@ function unblock(id) {
 }
 
 function blockSpace(spaceNumber) {
-    $("#make-reservation-result").empty();
+    $("#block-space-result").empty();
     $.ajax({
         type: "POST",
         url: 'https://localhost:7036/api/Blockings',
@@ -288,6 +273,40 @@ function blockSpace(spaceNumber) {
             alert(jqXHR.responseText)
         }
     });
+}
+
+function synchronizeUsers() {
+    $("#synchronize-results").empty();
+    $.ajax({
+        type: "POST",
+        url: `https://localhost:7036/api/Users/synchronize`,
+        dataType: "json",
+        success: function () {
+            $("#synchronize-results").append("<span>Synchronizace proběhla úspěšně.</span>");
+        },
+        error: function (jqXHR, textStatus) {
+            console.error(textStatus, jqXHR);
+            $("#synchronize-results").append("<span>Synchronizace selhala.</span>");
+        }
+    });
+}
+function blockSpaceDialog(spaceNumber) {
+    $('.blocking-dialog').remove();
+    $(`#sp-${spaceNumber}`).after(
+        `<tr class="blocking-dialog">
+            <td>
+                <form class="block-form" data-space-number=${spaceNumber}>
+                    <label for="begins-at">Začátek:</label>
+                    <input type="datetime-local" id="begins-at" name="begins-at" step"1800">
+                    <label for="ends-at">Konec:</label>
+                    <input type="datetime-local" id="ends-at" name="ends-at" step"1800">
+                    <label for="comment">Komentář:</label>
+                    <input type="text" id="comment" name="comment">
+                    <input type="submit">
+                </form>
+            <td>
+        </tr>`
+    )
 }
 
 function displayBlocking(blocking) {

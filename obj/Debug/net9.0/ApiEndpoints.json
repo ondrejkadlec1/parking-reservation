@@ -9,37 +9,19 @@
     "Parameters": [
       {
         "Name": "dto",
-        "Type": "ParkingReservation.Dtos.Reservations.CreateBlockingDto",
+        "Type": "ParkingReservation.Dtos.Reservations.BlockingRequestDto",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "ParkingReservation.Dtos.Reservations.BlockingDto",
+        "Type": "ParkingReservation.Dtos.Reservations.BlockingResponseDto",
         "MediaTypes": [
           "text/plain",
           "application/json",
           "text/json"
         ],
-        "StatusCode": 200
-      },
-      {
-        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 400
-      },
-      {
-        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 404
+        "StatusCode": 201
       }
     ]
   },
@@ -53,7 +35,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.ICollection\u00601[[ParkingReservation.Dtos.Reservations.BlockingDto, ParkingReservation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.ICollection\u00601[[ParkingReservation.Dtos.Reservations.BlockingResponseDto, ParkingReservation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -79,22 +61,13 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "ParkingReservation.Dtos.Reservations.ReservationDto",
+        "Type": "ParkingReservation.Dtos.Reservations.ReservationResponseDto",
         "MediaTypes": [
           "text/plain",
           "application/json",
           "text/json"
         ],
         "StatusCode": 201
-      },
-      {
-        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 400
       }
     ]
   },
@@ -117,15 +90,6 @@
         "Type": "System.Void",
         "MediaTypes": [],
         "StatusCode": 204
-      },
-      {
-        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 404
       }
     ]
   },
@@ -148,24 +112,6 @@
         "Type": "System.Void",
         "MediaTypes": [],
         "StatusCode": 204
-      },
-      {
-        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 403
-      },
-      {
-        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 404
       }
     ]
   },
@@ -192,15 +138,6 @@
           "text/json"
         ],
         "StatusCode": 200
-      },
-      {
-        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 400
       }
     ]
   },
@@ -230,7 +167,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.ICollection\u00601[[ParkingReservation.Dtos.Reservations.ReservationDto, ParkingReservation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.ICollection\u00601[[ParkingReservation.Dtos.Reservations.ReservationResponseDto, ParkingReservation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -250,7 +187,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.ICollection\u00601[[ParkingReservation.Dtos.Reservations.ReservationDto, ParkingReservation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.ICollection\u00601[[ParkingReservation.Dtos.Reservations.ReservationResponseDto, ParkingReservation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -270,7 +207,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.ICollection\u00601[[ParkingReservation.Dtos.Spaces.SpaceDto, ParkingReservation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.ICollection\u00601[[ParkingReservation.Dtos.Spaces.SpaceResponseDto, ParkingReservation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -290,19 +227,19 @@
     "Parameters": [
       {
         "Name": "dto",
-        "Type": "ParkingReservation.Dtos.Spaces.CreateSpacesDto",
+        "Type": "ParkingReservation.Dtos.Spaces.SpacesRequestDto",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[ParkingReservation.Dtos.Spaces.SpaceDto, ParkingReservation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[ParkingReservation.Dtos.Spaces.SpaceResponseDto, ParkingReservation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
           "text/json"
         ],
-        "StatusCode": 200
+        "StatusCode": 201
       }
     ]
   },
@@ -340,7 +277,7 @@
   {
     "ContainingType": "ParkingReservation.Controllers.SpacesController",
     "Method": "GetAvailability",
-    "RelativePath": "api/Spaces/avialible",
+    "RelativePath": "api/Spaces/available",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -358,7 +295,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "ParkingReservation.Dtos.Spaces.Availability",
+        "Type": "ParkingReservation.Dtos.Spaces.AvailabilityDto",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -374,6 +311,22 @@
           "text/json"
         ],
         "StatusCode": 400
+      }
+    ]
+  },
+  {
+    "ContainingType": "ParkingReservation.Controllers.UsersController",
+    "Method": "Post",
+    "RelativePath": "api/Users/synchronize",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 204
       }
     ]
   }

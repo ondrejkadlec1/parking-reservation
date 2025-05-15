@@ -4,7 +4,7 @@
         <name>ParkingReservation</name>
     </assembly>
     <members>
-        <member name="M:ParkingReservation.Controllers.BlockingsController.Post(ParkingReservation.Dtos.Reservations.CreateBlockingDto)">
+        <member name="M:ParkingReservation.Controllers.BlockingsController.Post(ParkingReservation.Dtos.Reservations.BlockingRequestDto)">
             <summary>
             Vytvoří novou blokaci, pokud už místo není zablokované a zruší konfliktní rezervace.
             </summary>
@@ -16,7 +16,7 @@
             Operace s rezervacemi.
             </summary>
         </member>
-        <member name="M:ParkingReservation.Controllers.ReservationsController.#ctor(ParkingReservation.Services.Interfaces.IReservationReadService,ParkingReservation.Services.Interfaces.IReservationWriteService)">
+        <member name="M:ParkingReservation.Controllers.ReservationsController.#ctor(ParkingReservation.Services.ReservationService.IReservationReadService,ParkingReservation.Services.ReservationService.IReservationWriteService)">
             <summary>
             Operace s rezervacemi.
             </summary>
@@ -87,7 +87,7 @@
             <param name="till">Konec potenciální rezervace.</param>
             <returns>Počet míst a obscazených míst.</returns>
         </member>
-        <member name="M:ParkingReservation.Controllers.SpacesController.Post(ParkingReservation.Dtos.Spaces.CreateSpacesDto)">
+        <member name="M:ParkingReservation.Controllers.SpacesController.Post(ParkingReservation.Dtos.Spaces.SpacesRequestDto)">
             <summary>
             Přidá daný počet parkovacích míst.
             </summary>
@@ -99,6 +99,11 @@
             Smaže parkovací místo pokud existuje.
             </summary>
             <param name="spaceNumber">Číslo parkovacího místa ke smazání.</param>
+        </member>
+        <member name="M:ParkingReservation.Controllers.UsersController.Post">
+            <summary>
+            Synchronizuje databázi uživatelů.
+            </summary>
         </member>
     </members>
 </doc>

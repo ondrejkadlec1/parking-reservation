@@ -18,12 +18,12 @@
 });
 
 function getSpaces() {
+    $('#available').empty();
     $.ajax({
         url: `https://localhost:7036/api/Spaces/available?from=${$('#begins-at').val()}Z&till=${$('#ends-at').val()}Z`,
         method: 'GET',
         dataType: 'json',
         success: function (response) {
-            $('#available').empty();
             $('#available').append(`<span>Obsazeno ${response.occupiedCount}/${response.totalCount}</span>`);
             if (response.available) {
                 $('#available').append(`<button id="res-button">Rezervovat</span>`);
