@@ -190,6 +190,7 @@ function deleteSpace(id) {
             $(`#sp-${id}`).remove();
         },
         error: function (jqXHR) {
+            console.log(jqXHR);
             alert(jqXHR.responseText)
         }
     });
@@ -266,6 +267,7 @@ function blockSpace(spaceNumber) {
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         success: function (data) {
+            $('.blocking-dialog').remove();
             $('#block-space-result').append(`<p>Vytvořena blokace číslo ${data.id}.</p>`);
             displayBlocking(data);
         },

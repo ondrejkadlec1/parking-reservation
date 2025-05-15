@@ -1,17 +1,16 @@
 ﻿INSERT INTO public.users (id, display_name, is_admin) VALUES
 ('e5d596da-ee1f-490b-a302-3d2bb43e426f', 'Ondřej Kadlec', true);
 
-
-INSERT INTO public.spaces (space_number, created_by, created_at) VALUES
-(1, 'e5d596da-ee1f-490b-a302-3d2bb43e426f', '2025-05-12 00:47:56.92+02'),
-(2, 'e5d596da-ee1f-490b-a302-3d2bb43e426f', '2025-05-12 00:47:56.92+02'),
-(3, 'e5d596da-ee1f-490b-a302-3d2bb43e426f', '2025-05-12 00:47:56.92+02'),
-(4, 'e5d596da-ee1f-490b-a302-3d2bb43e426f', '2025-05-12 00:47:56.92+02'),
-(5, 'e5d596da-ee1f-490b-a302-3d2bb43e426f', '2025-05-12 00:47:56.92+02'),
-(6, 'e5d596da-ee1f-490b-a302-3d2bb43e426f', '2025-05-12 00:50:33.08+02'),
-(7, 'e5d596da-ee1f-490b-a302-3d2bb43e426f', '2025-05-12 00:50:33.08+02'),
-(8, 'e5d596da-ee1f-490b-a302-3d2bb43e426f', '2025-05-12 00:57:05.6+02'),
-(9, 'e5d596da-ee1f-490b-a302-3d2bb43e426f', '2025-05-12 00:57:05.6+02');
+INSERT INTO public.spaces (created_by, created_at) VALUES
+('e5d596da-ee1f-490b-a302-3d2bb43e426f', '2025-05-12 00:47:56.92+02'),
+('e5d596da-ee1f-490b-a302-3d2bb43e426f', '2025-05-12 00:47:56.92+02'),
+('e5d596da-ee1f-490b-a302-3d2bb43e426f', '2025-05-12 00:47:56.92+02'),
+('e5d596da-ee1f-490b-a302-3d2bb43e426f', '2025-05-12 00:47:56.92+02'),
+('e5d596da-ee1f-490b-a302-3d2bb43e426f', '2025-05-12 00:47:56.92+02'),
+('e5d596da-ee1f-490b-a302-3d2bb43e426f', '2025-05-12 00:50:33.08+02'),
+('e5d596da-ee1f-490b-a302-3d2bb43e426f', '2025-05-12 00:50:33.08+02'),
+('e5d596da-ee1f-490b-a302-3d2bb43e426f', '2025-05-12 00:57:05.6+02'),
+('e5d596da-ee1f-490b-a302-3d2bb43e426f', '2025-05-12 00:57:05.6+02');
 
 INSERT INTO public.reservations (id, state_id, space_number, type_id, begins_at, ends_at, created_at, user_id, comment) VALUES
 ('0370c1ff-a13e-4430-99ae-75cd3502688a', 2, 9, 2, '2026-01-01 01:00:00+01', '2026-01-01 13:00:00+01', '2025-05-12 01:23:19.89+02', 'e5d596da-ee1f-490b-a302-3d2bb43e426f', 'Návštěva'),

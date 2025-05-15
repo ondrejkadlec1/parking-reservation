@@ -1,16 +1,16 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using ParkingReservation.Models;
 using ParkingReservation.Security.Requirements;
-using ParkingReservation.Services.ReservationService;
+using ParkingReservation.Services.OwnershipService;
 
 namespace ParkingReservation.Security.Handlers
 {
-    public class OwnerOrAdminHandler(IReservationReadService service) : AuthorizationHandler<OwnerOrAdminRequirement, Reservation>
+    public class OwnerOrAdminHandler(IOwnershipService service) : AuthorizationHandler<OwnerOrAdminRequirement, Reservation>
     {
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, OwnerOrAdminRequirement requirement, Reservation resource)
         {
             var isAdmin = context.User.IsInRole("Admin");
-            if (isAdmin || service.OwnsReservation(context.User, resource))
+            if (isAdmin || service.Owns(context.User, resource))
             {
                 context.Succeed(requirement);
             }

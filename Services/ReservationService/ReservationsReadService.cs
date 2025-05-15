@@ -40,7 +40,7 @@ namespace ParkingReservation.Services.ReservationService
             return output;
         }
 
-        public async Task<ICollection<ReservationResponseDto>> GetNormalByUser(ClaimsPrincipal user)
+        public async Task<ICollection<ReservationResponseDto>> GetByUser(ClaimsPrincipal user)
         {
             var userId = user.GetObjectId();
             var result = await context.Reservations
@@ -50,23 +50,6 @@ namespace ParkingReservation.Services.ReservationService
                 .Include(r => r.State)
                 .Include(r => r.User)
                 .Select(p => mapper.Map<ReservationResponseDto>(p))
-                .ToListAsync();
-
-            return result;
-        }
-
-        public async Task<ICollection<BlockingResponseDto>> GetFutureBlockingsByUser(ClaimsPrincipal user)
-        {
-            var userId = user.GetObjectId();
-            var result = await context.Reservations
-                .Where(p => p.UserId.ToString() == userId &&
-                    p.TypeId == 2 &&
-                    p.StateId == 2 &&
-                    p.EndsAt >= DateTime.UtcNow)
-                .Include(p => p.State)
-                .Include(p => p.User)
-                .OrderByDescending(p => p.CreatedAt)
-                .Select(p => mapper.Map<BlockingResponseDto>(p))
                 .ToListAsync();
 
             return result;
@@ -83,12 +66,6 @@ namespace ParkingReservation.Services.ReservationService
                 .ToListAsync();
 
             return result;
-        }
-
-        public bool OwnsReservation(ClaimsPrincipal user, Reservation reservation)
-        {
-            var userId = user.GetObjectId();
-            return userId != null && userId == reservation.UserId.ToString();
         }
     }
 }

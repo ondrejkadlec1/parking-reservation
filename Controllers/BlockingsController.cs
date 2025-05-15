@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ParkingReservation.Dtos.Reservations;
-using ParkingReservation.Services.ReservationService;
+using ParkingReservation.Services.BlockingService;
 
 namespace ParkingReservation.Controllers
 {
     [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
-    public class BlockingsController(IReservationWriteService writeService, IReservationReadService readService) : ControllerBase
+    public class BlockingsController(IBlockingService service) : ControllerBase
     {
 
         /// <summary>
@@ -21,14 +21,14 @@ namespace ParkingReservation.Controllers
         [ProducesResponseType(201)]
         public async Task<ActionResult<BlockingResponseDto>> Post(BlockingRequestDto dto)
         {
-            return Created("api/Blockings/my", await writeService.CreateBlocking(dto, User));
+            return Created("api/Blockings/my", await service.CreateBlocking(dto, User));
         }
 
         [HttpGet("my")]
         [ProducesResponseType(200)]
         public async Task<ActionResult<ICollection<BlockingResponseDto>>> GetMy()
         {
-            return Ok(await readService.GetFutureBlockingsByUser(User));
+            return Ok(await service.GetFutureBlockingsByUser(User));
         }
     }
 }

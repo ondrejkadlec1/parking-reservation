@@ -3,7 +3,6 @@ using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.Identity.Web;
 using Microsoft.OpenApi.Models;
 using ParkingReservation.Data;
@@ -11,8 +10,11 @@ using ParkingReservation.Security;
 using ParkingReservation.Security.Handlers;
 using ParkingReservation.Security.Requirements;
 using ParkingReservation.Services;
+using ParkingReservation.Services.Helpers;
 using ParkingReservation.Services.ReservationService;
 using ParkingReservation.Services.UserService;
+using ParkingReservation.Services.OwnershipService;
+using ParkingReservation.Services.BlockingService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -79,6 +81,8 @@ builder.Services.AddScoped<IClaimsTransformation, RoleClaimTransformer>();
 
 builder.Services.AddSingleton<GraphClientHelper>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IOwnershipService, OwnershipService>();
+builder.Services.AddScoped<IBlockingService, BlockingService>();
 builder.Services.AddScoped<IReservationWriteService, ReservationsWriteService>();
 builder.Services.AddScoped<IReservationReadService, ReservationsReadService>();
 

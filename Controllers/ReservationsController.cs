@@ -34,7 +34,7 @@ namespace ParkingReservation.Controllers
         [ProducesResponseType(200)]
         public async Task<ActionResult<ICollection<ReservationResponseDto>>> GetMy()
         {
-            return Ok(await readService.GetNormalByUser(User));
+            return Ok(await readService.GetByUser(User));
         }
 
         /// <summary>

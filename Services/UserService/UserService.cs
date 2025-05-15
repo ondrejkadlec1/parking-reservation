@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Graph;
 using ParkingReservation.Data;
-using ParkingReservation.Services.ReservationService;
+using ParkingReservation.Services.Helpers;
 
 namespace ParkingReservation.Services.UserService
 {

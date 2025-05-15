@@ -7,9 +7,7 @@ namespace ParkingReservation.Services.ReservationService
 {
     public interface IReservationReadService
     {
-        public bool OwnsReservation(ClaimsPrincipal user, Reservation reservation);
-        public Task<ICollection<ReservationResponseDto>> GetNormalByUser(ClaimsPrincipal user);
-        public Task<ICollection<BlockingResponseDto>> GetFutureBlockingsByUser(ClaimsPrincipal user);
+        public Task<ICollection<ReservationResponseDto>> GetByUser(ClaimsPrincipal user);
         public Task<ICollection<IReservationDto>> GetFutureBySpace(int spaceNumber);
         public Task<ICollection<ReservationResponseDto>> GetFutureRequests();
     }

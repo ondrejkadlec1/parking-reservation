@@ -100,11 +100,13 @@ namespace ParkingReservation.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult> Delete(int spaceNumber)
         {
-            if (await context.Spaces.Where(p => p.SpaceNumber == spaceNumber).FirstOrDefaultAsync() == null)
+            var space = await context.Spaces.Where(p => p.SpaceNumber == spaceNumber).FirstOrDefaultAsync();
+            if (space == null)
             {
                 return NotFound($"Parkovací místo s číslem {spaceNumber} neexistuje.");
             }
-            await context.Spaces.Where(p => p.SpaceNumber == spaceNumber).ExecuteDeleteAsync();
+            context.Remove(space);
+            await context.SaveChangesAsync();
             return NoContent();
         }
     }

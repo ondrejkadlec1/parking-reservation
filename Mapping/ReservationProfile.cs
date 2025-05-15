@@ -9,16 +9,16 @@ namespace ParkingReservation.Mapping
     {
         public ReservationProfile()
         {
-            CreateMap<Reservation, IReservationDto>()
+            CreateMap<Reservation, IOwnedDto>()
                 .ForMember(dest => dest.DisplayName, opt => opt.MapFrom(src => src.User.DisplayName));
             CreateMap<Reservation, ReservationResponseDto>()
-                .IncludeBase<Reservation, IReservationDto>()
+                .IncludeBase<Reservation, IOwnedDto>()
                 .ForMember(dest => dest.State, opt => opt.MapFrom(src => src.State.NameCs))
                 .ForMember(dest => dest.IsActive, opt => opt.MapFrom(src =>
                     src.StateId != 3 && src.EndsAt > DateTime.UtcNow));
             CreateMap<ReservationRequestDto, Reservation>();
             CreateMap<Reservation, BlockingResponseDto>()
-                .IncludeBase<Reservation, IReservationDto>();
+                .IncludeBase<Reservation, IOwnedDto>();
             CreateMap<BlockingRequestDto, Reservation>();
         }
 
