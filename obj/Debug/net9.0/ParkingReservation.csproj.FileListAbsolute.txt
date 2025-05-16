@@ -191,7 +191,6 @@ C:\Users\Ondra\source\repos\ParkingReservation\bin\Debug\net9.0\Microsoft.Identi
 C:\Users\Ondra\source\repos\ParkingReservation\bin\Debug\net9.0\Microsoft.Identity.Web.TokenAcquisition.dll
 C:\Users\Ondra\source\repos\ParkingReservation\bin\Debug\net9.0\Microsoft.Identity.Web.TokenCache.dll
 C:\Users\Ondra\source\repos\ParkingReservation\bin\Debug\net9.0\Microsoft.IdentityModel.LoggingExtensions.dll
-C:\Users\Ondra\source\repos\ParkingReservation\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 C:\Users\Ondra\source\repos\ParkingReservation\obj\Debug\net9.0\compressed\81eoghlm4v-9sc8wm5t9s.gz
 C:\Users\Ondra\source\repos\ParkingReservation\obj\Debug\net9.0\compressed\913o66jept-q7fgf7ogt4.gz
 C:\Users\Ondra\source\repos\ParkingReservation\obj\Debug\net9.0\compressed\vnbljes072-xu1gi3aosy.gz

@@ -10,6 +10,6 @@ namespace ParkingReservation.Dtos.Reservations
         public DateTime EndsAt { get; set; }
 
         public int SpaceNumber { get; set; }
-        public string Comment { get; set; }
+        public string Comment { get; set; } = null!;
     }
 }
