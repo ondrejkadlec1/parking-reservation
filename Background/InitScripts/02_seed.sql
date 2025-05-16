@@ -1,5 +1,6 @@
 ﻿INSERT INTO public.users (id, display_name, is_admin) VALUES
-('e5d596da-ee1f-490b-a302-3d2bb43e426f', 'Ondřej Kadlec', true);
+('e5d596da-ee1f-490b-a302-3d2bb43e426f', 'Ondřej Kadlec', true),
+('4eaedf70-3380-4dc6-839a-b2a9ef1fd3c5', 'franta', false);
 
 INSERT INTO public.spaces (created_by, created_at) VALUES
 ('e5d596da-ee1f-490b-a302-3d2bb43e426f', '2025-05-12 00:47:56.92+02'),

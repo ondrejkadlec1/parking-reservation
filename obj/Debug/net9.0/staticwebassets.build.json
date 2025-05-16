@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "b5WDKhn6I85oY4j7rECSjm4AIqvxquOqZTGoGUrikMk=",
+  "Hash": "cXvLaF+07AplUTg/+z/n50hS8vOKtV7xMdX8cy8gOe4=",
   "Source": "ParkingReservation",
   "BasePath": "_content/ParkingReservation",
   "Mode": "Default",
@@ -101,12 +101,12 @@
       "OriginalItemSpec": "C:\\Users\\Ondra\\source\\repos\\ParkingReservation\\wwwroot\\demo\\styles\\style.css"
     },
     {
-      "Identity": "C:\\Users\\Ondra\\source\\repos\\ParkingReservation\\obj\\Debug\\net9.0\\compressed\\galmqpcj1k-51kcpgb6kl.gz",
+      "Identity": "C:\\Users\\Ondra\\source\\repos\\ParkingReservation\\obj\\Debug\\net9.0\\compressed\\galmqpcj1k-34l0yho7me.gz",
       "SourceId": "ParkingReservation",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Ondra\\source\\repos\\ParkingReservation\\obj\\Debug\\net9.0\\compressed\\",
       "BasePath": "_content/ParkingReservation",
-      "RelativePath": "demo/scripts/admin#[.{fingerprint=51kcpgb6kl}]?.js.gz",
+      "RelativePath": "demo/scripts/admin#[.{fingerprint=34l0yho7me}]?.js.gz",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Alternative",
@@ -115,8 +115,8 @@
       "RelatedAsset": "C:\\Users\\Ondra\\source\\repos\\ParkingReservation\\wwwroot\\demo\\scripts\\admin.js",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "gzip",
-      "Fingerprint": "dn46rsjxu4",
-      "Integrity": "Cbi0Z+24vrJBtM9gzvOA4VragzAQN6iCvjZyyM1vW8g=",
+      "Fingerprint": "zf7xrohm1e",
+      "Integrity": "EXFSxd9E3hj3wBe9/ZQ7tnL+/iD5w3UcYMo5cd2yzbo=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Users\\Ondra\\source\\repos\\ParkingReservation\\wwwroot\\demo\\scripts\\admin.js"
@@ -220,8 +220,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "51kcpgb6kl",
-      "Integrity": "aRmX21Wv7cRyL1/jCc4E9Ha7srcnkdWG504F1XHcSrU=",
+      "Fingerprint": "34l0yho7me",
+      "Integrity": "HQ8YRJAvu4zuiK392w7LaF6JeTSHu8kM1qCyqC1eQbc=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\demo\\scripts\\admin.js"
@@ -909,13 +909,13 @@
       ]
     },
     {
-      "Route": "demo/scripts/admin.51kcpgb6kl.js",
-      "AssetFile": "C:\\Users\\Ondra\\source\\repos\\ParkingReservation\\obj\\Debug\\net9.0\\compressed\\galmqpcj1k-51kcpgb6kl.gz",
+      "Route": "demo/scripts/admin.34l0yho7me.js",
+      "AssetFile": "C:\\Users\\Ondra\\source\\repos\\ParkingReservation\\obj\\Debug\\net9.0\\compressed\\galmqpcj1k-34l0yho7me.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.000540540541"
+          "Quality": "0.000536480687"
         }
       ],
       "ResponseHeaders": [
@@ -925,15 +925,15 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1849"
+          "Value": "1863"
         },
         {
           "Name": "ETag",
-          "Value": "\"Cbi0Z+24vrJBtM9gzvOA4VragzAQN6iCvjZyyM1vW8g=\""
+          "Value": "\"EXFSxd9E3hj3wBe9/ZQ7tnL+/iD5w3UcYMo5cd2yzbo=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 15 May 2025 16:16:00 GMT"
+          "Value": "Thu, 15 May 2025 21:40:25 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -953,13 +953,13 @@
         },
         {
           "Name": "ETag",
-          "Value": "W/\"aRmX21Wv7cRyL1/jCc4E9Ha7srcnkdWG504F1XHcSrU=\""
+          "Value": "W/\"HQ8YRJAvu4zuiK392w7LaF6JeTSHu8kM1qCyqC1eQbc=\""
         }
       ],
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "51kcpgb6kl"
+          "Value": "34l0yho7me"
         },
         {
           "Name": "label",
@@ -967,12 +967,12 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-aRmX21Wv7cRyL1/jCc4E9Ha7srcnkdWG504F1XHcSrU="
+          "Value": "sha256-HQ8YRJAvu4zuiK392w7LaF6JeTSHu8kM1qCyqC1eQbc="
         }
       ]
     },
     {
-      "Route": "demo/scripts/admin.51kcpgb6kl.js",
+      "Route": "demo/scripts/admin.34l0yho7me.js",
       "AssetFile": "C:\\Users\\Ondra\\source\\repos\\ParkingReservation\\wwwroot\\demo\\scripts\\admin.js",
       "Selectors": [],
       "ResponseHeaders": [
@@ -982,7 +982,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "10460"
+          "Value": "10538"
         },
         {
           "Name": "Content-Type",
@@ -990,11 +990,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"aRmX21Wv7cRyL1/jCc4E9Ha7srcnkdWG504F1XHcSrU=\""
+          "Value": "\"HQ8YRJAvu4zuiK392w7LaF6JeTSHu8kM1qCyqC1eQbc=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 15 May 2025 16:16:00 GMT"
+          "Value": "Thu, 15 May 2025 21:40:25 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1004,7 +1004,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "51kcpgb6kl"
+          "Value": "34l0yho7me"
         },
         {
           "Name": "label",
@@ -1012,13 +1012,13 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-aRmX21Wv7cRyL1/jCc4E9Ha7srcnkdWG504F1XHcSrU="
+          "Value": "sha256-HQ8YRJAvu4zuiK392w7LaF6JeTSHu8kM1qCyqC1eQbc="
         }
       ]
     },
     {
-      "Route": "demo/scripts/admin.51kcpgb6kl.js.gz",
-      "AssetFile": "C:\\Users\\Ondra\\source\\repos\\ParkingReservation\\obj\\Debug\\net9.0\\compressed\\galmqpcj1k-51kcpgb6kl.gz",
+      "Route": "demo/scripts/admin.34l0yho7me.js.gz",
+      "AssetFile": "C:\\Users\\Ondra\\source\\repos\\ParkingReservation\\obj\\Debug\\net9.0\\compressed\\galmqpcj1k-34l0yho7me.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1027,7 +1027,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1849"
+          "Value": "1863"
         },
         {
           "Name": "Content-Type",
@@ -1035,11 +1035,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"Cbi0Z+24vrJBtM9gzvOA4VragzAQN6iCvjZyyM1vW8g=\""
+          "Value": "\"EXFSxd9E3hj3wBe9/ZQ7tnL+/iD5w3UcYMo5cd2yzbo=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 15 May 2025 16:16:00 GMT"
+          "Value": "Thu, 15 May 2025 21:40:25 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1057,7 +1057,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "51kcpgb6kl"
+          "Value": "34l0yho7me"
         },
         {
           "Name": "label",
@@ -1065,18 +1065,18 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-Cbi0Z+24vrJBtM9gzvOA4VragzAQN6iCvjZyyM1vW8g="
+          "Value": "sha256-EXFSxd9E3hj3wBe9/ZQ7tnL+/iD5w3UcYMo5cd2yzbo="
         }
       ]
     },
     {
       "Route": "demo/scripts/admin.js",
-      "AssetFile": "C:\\Users\\Ondra\\source\\repos\\ParkingReservation\\obj\\Debug\\net9.0\\compressed\\galmqpcj1k-51kcpgb6kl.gz",
+      "AssetFile": "C:\\Users\\Ondra\\source\\repos\\ParkingReservation\\obj\\Debug\\net9.0\\compressed\\galmqpcj1k-34l0yho7me.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.000540540541"
+          "Quality": "0.000536480687"
         }
       ],
       "ResponseHeaders": [
@@ -1086,15 +1086,15 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1849"
+          "Value": "1863"
         },
         {
           "Name": "ETag",
-          "Value": "\"Cbi0Z+24vrJBtM9gzvOA4VragzAQN6iCvjZyyM1vW8g=\""
+          "Value": "\"EXFSxd9E3hj3wBe9/ZQ7tnL+/iD5w3UcYMo5cd2yzbo=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 15 May 2025 16:16:00 GMT"
+          "Value": "Thu, 15 May 2025 21:40:25 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1114,13 +1114,13 @@
         },
         {
           "Name": "ETag",
-          "Value": "W/\"aRmX21Wv7cRyL1/jCc4E9Ha7srcnkdWG504F1XHcSrU=\""
+          "Value": "W/\"HQ8YRJAvu4zuiK392w7LaF6JeTSHu8kM1qCyqC1eQbc=\""
         }
       ],
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-aRmX21Wv7cRyL1/jCc4E9Ha7srcnkdWG504F1XHcSrU="
+          "Value": "sha256-HQ8YRJAvu4zuiK392w7LaF6JeTSHu8kM1qCyqC1eQbc="
         }
       ]
     },
@@ -1135,7 +1135,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "10460"
+          "Value": "10538"
         },
         {
           "Name": "Content-Type",
@@ -1143,11 +1143,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"aRmX21Wv7cRyL1/jCc4E9Ha7srcnkdWG504F1XHcSrU=\""
+          "Value": "\"HQ8YRJAvu4zuiK392w7LaF6JeTSHu8kM1qCyqC1eQbc=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 15 May 2025 16:16:00 GMT"
+          "Value": "Thu, 15 May 2025 21:40:25 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1157,13 +1157,13 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-aRmX21Wv7cRyL1/jCc4E9Ha7srcnkdWG504F1XHcSrU="
+          "Value": "sha256-HQ8YRJAvu4zuiK392w7LaF6JeTSHu8kM1qCyqC1eQbc="
         }
       ]
     },
     {
       "Route": "demo/scripts/admin.js.gz",
-      "AssetFile": "C:\\Users\\Ondra\\source\\repos\\ParkingReservation\\obj\\Debug\\net9.0\\compressed\\galmqpcj1k-51kcpgb6kl.gz",
+      "AssetFile": "C:\\Users\\Ondra\\source\\repos\\ParkingReservation\\obj\\Debug\\net9.0\\compressed\\galmqpcj1k-34l0yho7me.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1172,7 +1172,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1849"
+          "Value": "1863"
         },
         {
           "Name": "Content-Type",
@@ -1180,11 +1180,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"Cbi0Z+24vrJBtM9gzvOA4VragzAQN6iCvjZyyM1vW8g=\""
+          "Value": "\"EXFSxd9E3hj3wBe9/ZQ7tnL+/iD5w3UcYMo5cd2yzbo=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 15 May 2025 16:16:00 GMT"
+          "Value": "Thu, 15 May 2025 21:40:25 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1202,7 +1202,7 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-Cbi0Z+24vrJBtM9gzvOA4VragzAQN6iCvjZyyM1vW8g="
+          "Value": "sha256-EXFSxd9E3hj3wBe9/ZQ7tnL+/iD5w3UcYMo5cd2yzbo="
         }
       ]
     },
